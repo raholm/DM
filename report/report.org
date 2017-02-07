@@ -11,7 +11,7 @@
 * \textit{k}-Means
 In this exercise I have used the default options for the \textit{k}-means algorithm unless specified otherwise.
 
-I have decided to use two settings, 2 and 5 clusters.
+I have decided to use two settings, 2 and 5 clusters, and done two different cluster analysis.
 
 ** Result 1
 In the first clustering I decided the use the features: Energy, Protein, Fat.
@@ -30,6 +30,8 @@ The resulting clusters can be seen below.
 
 We can see from the plots that the clusters seem good and are well separated.
 The observations in the blue cluster have greater values in energy and fat with kind of an average value in protein.
+We could say that the blue cluster contains energy rich and healthy food that are good when working out
+while the red cluster contains food that are low-fat and low-energy that are good for weight loss.
 
 *** 5 Clusters
 The resulting clusters can be seen below.
@@ -38,7 +40,7 @@ The resulting clusters can be seen below.
 #+ATTR_LATEX: :placement [H] :width 0.5\textwidth
 [[./images/cl5_res1_01.png]]
 
-The clusters seem reasonable except the green and the bright blue in the middle are not as well defined as they could be.
+The clusters seem reasonable except that the green and the bright blue clusters in the middle are not as well defined as they could be.
 The two green observations close to the blue cluster could be considered part of the blue cluster and I think that would have been better cluster assignments.
 
 #+CAPTION: X-axis: Energy, Y-axis: Fat
@@ -46,11 +48,12 @@ The two green observations close to the blue cluster could be considered part of
 [[./images/cl5_res1_02.png]]
 
 However, this plot shows that the clusters are not as well defined as they first seemed. We can see that the green, red, and bright blue clusters overlap.
+Overall, I would say that it is more appropriate to use 2 clusters than 5 using these attributes.
 
 \newpage
 
 ** Result 2
-Here I decided the use the remaining features: iron, calium.
+Here I decided the use the remaining features: iron and calcium.
 
 *** 2 Clusters
 #+CAPTION: X-axis: Calcium, Y-axis: Iron
@@ -58,15 +61,18 @@ Here I decided the use the remaining features: iron, calium.
 [[./images/cl2_res2_01.png]]
 
 The clusters are not as well separated in this case since the observations are more scattared. It looks like it is suitable to find more than 2 clusters in this case.
+
 *** 5 Clusters
 #+CAPTION: X-axis: Calcium, Y-axis: Iron
 #+ATTR_LATEX: :placement [H] :width 0.5\textwidth
 [[./images/cl5_res2_01.png]]
 
 Using 5 clusters yield much better clusters with higher separation and lower intra-cluster distances.
-The within cluster sum of squared errors for 2 clusters was 2.1318825152549974 and for 5 clusters it was 0.20051454992067588 so we can see that it has
-been reduced by 10.
-** Seed
-Since I am using random initialization the seed controls where the centroids are initialized which have great influence what the final clusters will look like.
+The within cluster sum of squared errors for 2 clusters was 2.13 and for 5 clusters it was 0.20 so we can see that it has
+been reduced by 10 times.
 
+** Seed
+Since I am using random initialization the seed controls where the centroids are initialized which greatly influence what the final clusters will look like.
+
+\newpage
 * Density
