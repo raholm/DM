@@ -1,5 +1,4 @@
-#+TITLE: 732A61
-#+SUBTITLE: Lab 1
+#+TITLE: 732A61 \\ \large Lab 1
 #+AUTHOR: Rasmus Holm
 #+OPTIONS: toc:true
 #+LaTeX_CLASS: article
@@ -11,7 +10,9 @@
 * \textit{k}-Means
 In this exercise I have used the default options for the \textit{k}-means algorithm unless specified otherwise.
 
-I have decided to use two settings, 2 and 5 clusters, and done two different cluster analysis.
+I have decided to use two settings, 2 and 5 clusters, and done two different cluster analysis. I have excluded
+the name attribute since it is just a string and it is not possible to calculate distances based on arbitrary string
+values.
 
 ** Result 1
 In the first clustering I decided the use the features: Energy, Protein, Fat.
@@ -76,3 +77,34 @@ Since I am using random initialization the seed controls where the centroids are
 
 \newpage
 * Density
+I will be using the data I worked with in result 1 above and use 2 clusters
+but this time turning $k$-means into a density-based clustering algorithm.
+
+The MakeDensityBasedClusters class will create Gaussian distributions at the cluster centroids produced by the
+$k$-means algorithm, i.e. the mean of the distributions are the cluster centroids, and the standard deviation (std) is
+given by the observations assigned to each cluster. However, we can control the distributions by specifying
+the minimum std which can widthen the distributions. The densities can then be used to calculate probabilities
+for each observation being in each clusters which is also influenced by the prior probabilities, the ratio of points
+in each cluster produced by $k$-means, and an observation is assigned to the cluster with highest probability.
+
+Below are results with different minimum standard deviations.
+
+#+CAPTION: X-axis: Energy, Y-axis: Protein
+#+ATTR_LATEX: :placement [H] :width 0.5\textwidth
+[[./images/cl2_res3_01.png]]
+
+In the above plot I have used min std = 0.1 and we can see that the clusters are exactly the same as result from
+the previous assignment using the regular $k$-means algorithm.
+
+#+CAPTION: X-axis: Energy, Y-axis: Protein
+#+ATTR_LATEX: :placement [H] :width 0.5\textwidth
+[[./images/cl2_res3_02.png]]
+
+Given min std = 100 we can see changes in the clusters and as expected the red cluster with more observations,
+higher prior probability, consumes observations from the blue cluster.
+
+#+CAPTION: X-axis: Energy, Y-axis: Protein
+#+ATTR_LATEX: :placement [H] :width 0.5\textwidth
+[[./images/cl2_res3_03.png]]
+
+Similarly as previously, min std = 200 means the red cluster consumes even more points from the blue cluster.
