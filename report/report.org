@@ -10,12 +10,12 @@
 * \textit{k}-Means
 In this exercise I have used the default options for the \textit{k}-means algorithm unless specified otherwise.
 
-I have decided to use two settings, 2 and 5 clusters, and done two different cluster analysis. I have excluded
+I have decided to use two settings, 2 and 5 clusters, and done two different cluster analyses. I have excluded
 the name attribute since it is just a string and it is not possible to calculate distances based on arbitrary string
 values.
 
 ** Result 1
-In the first clustering I decided the use the features: Energy, Protein, Fat.
+In this cluster analysis I decided to use the features: Energy, Protein, Fat.
 The decision was based on the scatterplot matrix where I could see that there seemed to be positive correlations between protein/fat and energy.
 
 *** 2 Clusters
@@ -83,8 +83,8 @@ but this time turning $k$-means into a density-based clustering algorithm.
 The MakeDensityBasedClusters class will create Gaussian distributions at the cluster centroids produced by the
 $k$-means algorithm, i.e. the mean of the distributions are the cluster centroids, and the standard deviation (std) is
 given by the observations assigned to each cluster. However, we can control the distributions by specifying
-the minimum std which can increase the widths. The densities can then be used to calculate probabilities
-for each observation being in each cluster which is also influenced by the prior probabilities, the ratio of points
+the minimum std which can increase the widths. The densities can then be used to calculate probabilities of being
+in each cluster for all observations which is also influenced by the prior probabilities, the ratio of points
 in each cluster produced by $k$-means, and an observation is assigned to the cluster with the highest probability.
 
 Below are results with different minimum standard deviations.
