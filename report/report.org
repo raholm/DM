@@ -83,9 +83,9 @@ but this time turning $k$-means into a density-based clustering algorithm.
 The MakeDensityBasedClusters class will create Gaussian distributions at the cluster centroids produced by the
 $k$-means algorithm, i.e. the mean of the distributions are the cluster centroids, and the standard deviation (std) is
 given by the observations assigned to each cluster. However, we can control the distributions by specifying
-the minimum std which can widthen the distributions. The densities can then be used to calculate probabilities
-for each observation being in each clusters which is also influenced by the prior probabilities, the ratio of points
-in each cluster produced by $k$-means, and an observation is assigned to the cluster with highest probability.
+the minimum std which can increase the widths. The densities can then be used to calculate probabilities
+for each observation being in each cluster which is also influenced by the prior probabilities, the ratio of points
+in each cluster produced by $k$-means, and an observation is assigned to the cluster with the highest probability.
 
 Below are results with different minimum standard deviations.
 
