@@ -1,0 +1,29 @@
+#+TITLE: 732A61 \\ \large Lab 2
+#+AUTHOR: Rasmus Holm
+#+OPTIONS: toc:true
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [10pt]
+#+LATEX_HEADER: \usepackage[font={scriptsize, it}]{caption}
+
+\newpage
+
+* \textit{k}-Means
+** Result 1
+In this cluster analysis I decided to use the features: Energy, Protein, Fat.
+The decision was based on the scatterplot matrix where I could see that there seemed to be positive correlations between protein/fat and energy.
+
+*** 2 Clusters
+The resulting clusters can be seen below.
+
+#+CAPTION: X-axis: Energy, Y-axis: Protein
+#+ATTR_LATEX: :placement [H] :width 0.5\textwidth
+[[./images/cl2_res1_01.png]]
+
+#+CAPTION: X-axis: Energy Y-axis: Fat
+#+ATTR_LATEX: :placement [H] :width 0.5\textwidth
+[[./images/cl2_res1_02.png]]
+
+We can see from the plots that the clusters seem good and are well separated.
+The observations in the blue cluster have greater values in energy and fat with kind of an average value in protein.
+We could say that the blue cluster contains energy rich and healthy food that are good when working out
+while the red cluster contains food that are low-fat and low-energy that are good for weight loss.
