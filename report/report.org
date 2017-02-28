@@ -1,6 +1,6 @@
 #+TITLE: 732A61 \\ \large Lab 2
 #+AUTHOR: Rasmus Holm
-#+OPTIONS: toc:true
+#+OPTIONS: toc:nil
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [10pt]
 #+LATEX_HEADER: \usepackage[font={scriptsize, it}]{caption}
@@ -9,78 +9,87 @@
 
 * Association Analysis
 ** Result 1
-Settings:
+*** Settings
 - Bins = 3
 - $k$-means (k = 3, seed = 10)
 - Apriori Algorithm (minSup = 0.2, numRules = 250)
 *** Cluster 1
-51. petallength='(2.966667-4.933333]' petalwidth='(0.9-1.7]' 48 ==> cluster=cluster1 48    <conf:(1)> lift:(2.73) lev:(0.2) [30] conv:(30.4)
+- petallength='(2.966667-4.933333]' petalwidth='(0.9-1.7]' 48 ==> cluster=cluster1 48    <conf:(1)>
 *** Cluster 2
-106. petallength='(4.933333-inf)' petalwidth='(1.7-inf)' 40 ==> cluster=cluster2 40    <conf:(1)> lift:(3.33) lev:(0.19) [27] conv:(28)
+- petallength='(4.933333-inf)' petalwidth='(1.7-inf)' 40 ==> cluster=cluster2 40    <conf:(1)>
 *** Cluster 3
-6. petallength='(-inf-2.966667]' 50 ==> cluster=cluster3 50    <conf:(1)> lift:(3) lev:(0.22) [33] conv:(33.33)
-10. petalwidth='(-inf-0.9]' 50 ==> cluster=cluster3 50    <conf:(1)> lift:(3) lev:(0.22) [33] conv:(33.33)
-21. petallength='(-inf-2.966667]' petalwidth='(-inf-0.9]' 50 ==> cluster=cluster3 50    <conf:(1)> lift:(3) lev:(0.22) [33] conv:(33.33)
+- petallength='(-inf-2.966667]' petalwidth='(-inf-0.9]' 50 ==> cluster=cluster3 50    <conf:(1)>
+*** Plot
+[[./images/cl_res1.png]]
+*** Analysis
+From the rules found by Apriori we can see that the clusters distunguish the type of flowers
+based on the petal length/width. Notice that the length seem to be correlated with the width,
+i.e. low petal length indicates low width and vice versa. According to the plot we can see that
+the petal length/width are the most discrimant variables.
+\newpage
 ** Result 2
-Settings:
+*** Settings
 - Bins = 3
 - Hierarchical clustering (k = 3, linkage = complete)
 - Apriori Algorithm (minSup = 0.2, numRules = 500)
 *** Cluster 1
-6. petallength='(-inf-2.966667]' 50 ==> cluster=cluster1 50    <conf:(1)> lift:(3) lev:(0.22) [33] conv:(33.33)
-10. petalwidth='(-inf-0.9]' 50 ==> cluster=cluster1 50    <conf:(1)> lift:(3) lev:(0.22) [33] conv:(33.33)
-21. petallength='(-inf-2.966667]' petalwidth='(-inf-0.9]' 50 ==> cluster=cluster1 50    <conf:(1)> lift:(3) lev:(0.22) [33] conv:(33.33)
+- petallength='(-inf-2.966667]' petalwidth='(-inf-0.9]' 50 ==> cluster=cluster1 50    <conf:(1)>
 *** Cluster 2
-295. sepalwidth='(-inf-2.8]' petallength='(2.966667-4.933333]' petalwidth='(0.9-1.7]' 27 ==> cluster=cluster2 27    <conf:(1)> lift:(4.84) lev:(0.14) [21] conv:(21.42)
+- sepalwidth='(-inf-2.8]' petallength='(2.966667-4.933333]' petalwidth='(0.9-1.7]' 27 ==> cluster=cluster2 27    <conf:(1)>
 *** Cluster 3
-101. petalwidth='(1.7-inf)' 46 ==> cluster=cluster3 46    <conf:(1)> lift:(2.17) lev:(0.17) [24] conv:(24.84)
-104. petallength='(4.933333-inf)' petalwidth='(1.7-inf)' 40 ==> cluster=cluster3 40    <conf:(1)> lift:(2.17) lev:(0.14) [21] conv:(21.6)
+- petallength='(4.933333-inf)' petalwidth='(1.7-inf)' 40 ==> cluster=cluster3 40    <conf:(1)>
+*** Plot
+[[./images/cl_res2.png]]
+*** Analysis
+In this result I choose to use the hierarchical clustering instead of $k$-means which have resulted in similar clusters.
+However, the acendent of the rule in cluster 2 also contains low values of sepal width which is important
+to distinguish observations from cluster 2 and 3 according to my observations of the plot. This indicates that the
+clusters are worse than those found by $k$-means since we require more information to separate the classes.
+\newpage
 ** Result 3
 - Bins = 6
 - $k$-means (k = 3, seed = 10)
 - Apriori Algorithm (minSup = 0.1, numRules = 500)
 *** Cluster 1
-3. petallength='(-inf-1.983333]' 50 ==> cluster=cluster1 50    <conf:(1)> lift:(2.46) lev:(0.2) [29] conv:(29.67)
-12. petalwidth='(-inf-0.5]' 49 ==> cluster=cluster1 49    <conf:(1)> lift:(2.46) lev:(0.19) [29] conv:(29.07)
-17. petallength='(-inf-1.983333]' petalwidth='(-inf-0.5]' 49 ==> cluster=cluster1 49    <conf:(1)> lift:(2.46) lev:(0.19) [29] conv:(29.07)
-32. sepallength='(4.9-5.5]' petallength='(-inf-1.983333]' 27 ==> cluster=cluster1 27    <conf:(1)> lift:(2.46) lev:(0.11) [16] conv:(16.02)
-41. sepallength='(4.9-5.5]' petalwidth='(-inf-0.5]' 26 ==> cluster=cluster1 26    <conf:(1)> lift:(2.46) lev:(0.1) [15] conv:(15.43)
- 46. sepallength='(4.9-5.5]' petallength='(-inf-1.983333]' petalwidth='(-inf-0.5]' 26 ==> cluster=cluster1 26    <conf:(1)> lift:(2.46) lev:(0.1) [15] conv:(15.43)
- 68. sepallength='(-inf-4.9]' petallength='(-inf-1.983333]' 20 ==> cluster=cluster1 20    <conf:(1)> lift:(2.46) lev:(0.08) [11] conv:(11.87)
- 72. sepallength='(-inf-4.9]' petalwidth='(-inf-0.5]' 20 ==> cluster=cluster1 20    <conf:(1)> lift:(2.46) lev:(0.08) [11] conv:(11.87)
- 84. sepallength='(-inf-4.9]' petallength='(-inf-1.983333]' petalwidth='(-inf-0.5]' 20 ==> cluster=cluster1 20    <conf:(1)> lift:(2.46) lev:(0.08) [11] conv:(11.87)
-117. sepalwidth='(3.2-3.6]' petallength='(-inf-1.983333]' 19 ==> cluster=cluster1 19    <conf:(1)> lift:(2.46) lev:(0.08) [11] conv:(11.27)
-130. sepalwidth='(3.2-3.6]' petalwidth='(-inf-0.5]' 18 ==> cluster=cluster1 18    <conf:(1)> lift:(2.46) lev:(0.07) [10] conv:(10.68)
+- petallength='(-inf-1.983333]' petalwidth='(-inf-0.5]' 49 ==> cluster=cluster1 49    <conf:(1)>
+- sepallength='(4.9-5.5]' petallength='(-inf-1.983333]' petalwidth='(-inf-0.5]' 26 ==> cluster=cluster1 26    <conf:(1)>
 *** Cluster 2
- 61. sepallength='(5.5-6.1]' petallength='(3.95-4.933333]' 21 ==> cluster=cluster2 21    <conf:(1)> lift:(2.88) lev:(0.09) [13] conv:(13.72)
-132. petallength='(3.95-4.933333]' petalwidth='(0.9-1.3]' 18 ==> cluster=cluster2 18    <conf:(1)> lift:(2.88) lev:(0.08) [11] conv:(11.76)
-153. sepallength='(5.5-6.1]' sepalwidth='(2.4-2.8]' 17 ==> cluster=cluster2 17    <conf:(1)> lift:(2.88) lev:(0.07) [11] conv:(11.11)
+- sepallength='(5.5-6.1]' petallength='(3.95-4.933333]' 21 ==> cluster=cluster2 21    <conf:(1)>
+- petallength='(3.95-4.933333]' petalwidth='(0.9-1.3]' 18 ==> cluster=cluster2 18    <conf:(1)>
+- sepallength='(5.5-6.1]' sepalwidth='(2.4-2.8]' 17 ==> cluster=cluster2 17    <conf:(1)>
 *** Cluster 3
- 75. sepallength='(6.1-6.7]' petallength='(4.933333-5.916667]' 20 ==> cluster=cluster3 20    <conf:(1)> lift:(4.05) lev:(0.1) [15] conv:(15.07)
-127. sepalwidth='(2.8-3.2]' petallength='(4.933333-5.916667]' 18 ==> cluster=cluster3 18    <conf:(1)> lift:(4.05) lev:(0.09) [13] conv:(13.56)
+- sepallength='(6.1-6.7]' petallength='(4.933333-5.916667]' 20 ==> cluster=cluster3 20    <conf:(1)
+- sepalwidth='(2.8-3.2]' petallength='(4.933333-5.916667]' 18 ==> cluster=cluster3 18    <conf:(1)>
+*** Plot
+[[./images/cl_res3.png]]
+*** Analysis
+Increasing the number of bins increases the granularity of the variables and it seems to make it more difficult
+for the $k$-means to find good clusters in this case. The observations are more spread out but we can clearly see that
+cluster 1 contains observations with low values of petal length/width. The ascendent values of the first rules in cluster 2 and 3
+are very close to each other which indicates that the clusters overlap each other and therefore the final clusters are not
+as well defined as for instance from the first result.
+\newpage
 ** Result 4
 - Bins = 6
 - $k$-means (k = 6, seed = 10)
 - Apriori Algorithm (minSup = 0.1, numRules = 500)
 *** Cluster 1
- 52. sepallength='(5.5-6.1]' petallength='(3.95-4.933333]' 21 ==> cluster=cluster1 21    <conf:(1)> lift:(3.41) lev:(0.1) [14] conv:(14.84)
- 99. sepallength='(5.5-6.1]' sepalwidth='(2.4-2.8]' 17 ==> cluster=cluster1 17    <conf:(1)> lift:(3.41) lev:(0.08) [12] conv:(12.01)
-189. sepallength='(5.5-6.1]' petalwidth='(0.9-1.3]' 15 ==> cluster=cluster1 15    <conf:(1)> lift:(3.41) lev:(0.07) [10] conv:(10.6)
+- sepallength='(5.5-6.1]' petallength='(3.95-4.933333]' 21 ==> cluster=cluster1 21    <conf:(1)>
+- sepallength='(5.5-6.1]' sepalwidth='(2.4-2.8]' 17 ==> cluster=cluster1 17    <conf:(1)>
+- sepallength='(5.5-6.1]' petalwidth='(0.9-1.3]' 15 ==> cluster=cluster1 15    <conf:(1)>
 *** Cluster 2
-Couldn't find anything
+Couldn't find any rules.
 *** Cluster 3
-377. sepalwidth='(2.8-3.2]' petallength='(4.933333-5.916667]' 18 ==> cluster=cluster3 17    <conf:(0.94)> lift:(5.06) lev:(0.09) [13] conv:(7.32)
-381. petallength='(4.933333-5.916667]' petalwidth='(2.1-inf)' 17 ==> cluster=cluster3 16    <conf:(0.94)> lift:(5.04) lev:(0.09) [12] conv:(6.91)
-469. petalwidth='(2.1-inf)' 23 ==> cluster=cluster3 21    <conf:(0.91)> lift:(4.89) lev:(0.11) [16] conv:(6.24)
+- sepalwidth='(2.8-3.2]' petallength='(4.933333-5.916667]' 18 ==> cluster=cluster3 17    <conf:(0.94)>
+- petallength='(4.933333-5.916667]' petalwidth='(2.1-inf)' 17 ==> cluster=cluster3 16    <conf:(0.94)>
 *** Cluster 4
- 22. sepallength='(4.9-5.5]' petallength='(-inf-1.983333]' 27 ==> cluster=cluster4 27    <conf:(1)> lift:(4.41) lev:(0.14) [20] conv:(20.88)
- 33. sepallength='(4.9-5.5]' petalwidth='(-inf-0.5]' 26 ==> cluster=cluster4 26    <conf:(1)> lift:(4.41) lev:(0.13) [20] conv:(20.11)
- 38. sepallength='(4.9-5.5]' petallength='(-inf-1.983333]' petalwidth='(-inf-0.5]' 26 ==> cluster=cluster4 26    <conf:(1)> lift:(4.41) lev:(0.13) [20] conv:(20.11)
- 69. sepalwidth='(3.2-3.6]' petallength='(-inf-1.983333]' 19 ==> cluster=cluster4 19    <conf:(1)> lift:(4.41) lev:(0.1) [14] conv:(14.69)
- 87. sepalwidth='(3.2-3.6]' petallength='(-inf-1.983333]' petalwidth='(-inf-0.5]' 18 ==> cluster=cluster4 18    <conf:(1)> lift:(4.41) lev:(0.09) [13] conv:(13.92)
+- sepallength='(4.9-5.5]' petallength='(-inf-1.983333]' petalwidth='(-inf-0.5]' 26 ==> cluster=cluster4 26    <conf:(1)>
+- sepalwidth='(3.2-3.6]' petallength='(-inf-1.983333]' petalwidth='(-inf-0.5]' 18 ==> cluster=cluster4 18    <conf:(1)>
 *** Cluster 5
-Couldn't find anything
+Couldn't find any rules.
 *** Cluster 6
-183. sepallength='(-inf-4.9]' sepalwidth='(2.8-3.2]' 15 ==> cluster=cluster6 15    <conf:(1)> lift:(9.38) lev:(0.09) [13] conv:(13.4)
-202. sepallength='(-inf-4.9]' sepalwidth='(2.8-3.2]' petallength='(-inf-1.983333]' 15 ==> cluster=cluster6 15    <conf:(1)> lift:(9.38) lev:(0.09) [13] conv:(13.4)
-210. sepallength='(-inf-4.9]' sepalwidth='(2.8-3.2]' petalwidth='(-inf-0.5]' 15 ==> cluster=cluster6 15    <conf:(1)> lift:(9.38) lev:(0.09) [13] conv:(13.4)
+- sepallength='(-inf-4.9]' sepalwidth='(2.8-3.2]' petallength='(-inf-1.983333]' 15 ==> cluster=cluster6 15    <conf:(1)>
+- sepallength='(-inf-4.9]' sepalwidth='(2.8-3.2]' petalwidth='(-inf-0.5]' 15 ==> cluster=cluster6 15    <conf:(1)>
+*** Plot
+[[./images/cl_res4.png]]
+*** Analysis
