@@ -8,3 +8,31 @@
 \newpage
 
 * Association Analysis
+** Why can the clustering algorithms not find a clustering that matches the class division in the database?
+From the plot below we can see that the two classes overlap in all the variables and therefore it is impossible
+to separate the two classes perfectly in the input space for the methods I tried.
+
+I tried $k$-means, density based $k$-means, hierarhical, and EM with EM performing the best with a misclassification rate of 42.7\%
+which is close to random guessing in this case so it is not particular good.
+
+A major flaw with these tests are that clustering algorithms are not designed to classify observations so the objective functions are
+completely different from what a classification algorithm would have. Clustering algorithms tries to minimize the intra-cluster distances
+and maximize the inter-cluster distances and categorical variables are particular sensitive for distance measures like
+the Euclidean distance.
+** Finally, would you say that the clustering algorithms fail or perform poorly for the monk1 dataset? Why or why not?
+
+** Rules
+- attribute#5=1 29 ==> class=1 29    <conf:(1)>
+- attribute#1=3 attribute#2=3 17 ==> class=1 17    <conf:(1)>
+- attribute#1=2 attribute#2=2 15 ==> class=1 15    <conf:(1)>
+- attribute#1=1 attribute#2=1 9 ==> class=1 9    <conf:(1)>
+I choose these particular rules since those correspond to those found in the documentation
+about the data set.
+
+The rules correspond to the following plots
+#+CAPTION: X-axis: Attribute 5, Y-axis: Attribute 2
+#+ATTR_LATEX: :placement [H] :width 0.5\textwidth
+[[./images/rule1_plot.png]]
+#+CAPTION: X-axis: Attribute 1, Y-axis: Attribute 2
+#+ATTR_LATEX: :placement [H] :width 0.5\textwidth
+[[./images/rule2_plot.png]]
