@@ -1,0 +1,10 @@
+#+TITLE: 732A61 \\ \large Lab 3
+#+AUTHOR: Rasmus Holm
+#+OPTIONS: toc:nil
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [10pt]
+#+LATEX_HEADER: \usepackage[font={scriptsize, it}]{caption}
+
+\newpage
+
+* Association Analysis
