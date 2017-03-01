@@ -7,7 +7,7 @@
 
 \newpage
 
-* Association Analysis
+* Clustering
 From the plot below we can see that the two classes overlap in all the variables and therefore it is impossible
 to separate the two classes perfectly in the input space for the methods I tried.
 
@@ -20,10 +20,8 @@ A major flaw with these tests are that clustering algorithms are not designed to
 completely different from what a classification algorithm would have. Clustering algorithms tries to minimize the intra-cluster distances
 and maximize the inter-cluster distances and categorical variables are particular sensitive for distance measures like
 the Euclidean distance since they are either the same or not the same.
-
-** Why can the clustering algorithms not find a clustering that matches the class division in the database?
-** Finally, would you say that the clustering algorithms fail or perform poorly for the monk1 dataset? Why or why not?
-
+* Association Analysis
+I used the Apriori algorithm with minimum support of 0.05 and 19 rules in total. Below are the rules I choose.
 ** Rules
 - attribute#5=1 29 ==> class=1 29    <conf:(1)>
 - attribute#1=3 attribute#2=3 17 ==> class=1 17    <conf:(1)>
@@ -32,12 +30,17 @@ the Euclidean distance since they are either the same or not the same.
 I choose these particular rules since those correspond to those I found in the documentation
 about the data set.
 
-The rules correspond to the following plots
-*** Attribute 5 = 1
-#+CAPTION: X-axis: Attribute 5, Y-axis: Attribute 2
+The rules correspond to the following plots:
+
+#+CAPTION: X-axis: Attribute 5, Y-axis: Attribute 2 \\ The red clusters to the left.
 #+ATTR_LATEX: :placement [H] :width 0.5\textwidth
 [[./images/rule1_plot.png]]
-*** Attribute 1 = Attribute 2
-#+CAPTION: X-axis: Attribute 1, Y-axis: Attribute 2
+
+#+CAPTION: X-axis: Attribute 1, Y-axis: Attribute 2 \\ The red clusters in the anti-diagonal
 #+ATTR_LATEX: :placement [H] :width 0.5\textwidth
 [[./images/rule2_plot.png]]
+
+** Analysis
+Association analysis have the advantage of being able to find smaller clusters within the data
+and then aggregate those together to perfectly distinguish the classes in this particular case.
+The clustering algorithms do not possess this ability and therefore cannot perform as good.
