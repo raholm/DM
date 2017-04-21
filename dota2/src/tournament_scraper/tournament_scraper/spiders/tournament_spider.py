@@ -5,6 +5,7 @@ import scrapy
 from ..parser import TournamentParser, MatchParser
 from ..items import TournamentScraperItem, MatchScraperItem
 
+
 class ResponseStatus(Enum):
 	OK = 200
 	ERROR = 404
@@ -13,6 +14,16 @@ class ResponseStatus(Enum):
 class TournamentSpider(scrapy.Spider):
 	name = "tournament"
 	base_url = "https://www.dotabuff.com"
+
+	allowed_domains = ['dotabuff.com']
+
+	custom_settings = {
+		'ITEM_PIPELINES': {
+			# 'tournament_scraper.pipelines.PrintItemPipeline': 100,
+			'tournament_scraper.pipelines.ItemValidatorPipeline': 100,
+			'tournament_scraper.pipelines.CountItemPipeline': 200,
+		}
+	}
 
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
@@ -30,26 +41,34 @@ class TournamentSpider(scrapy.Spider):
 			yield scrapy.Request(url=url, callback=self.parse)
 
 	def parse(self, response):
-		if response.status != ResponseStatus.OK:
-			pass
+		if not self.is_ok(response):
+			return
 
-		yield self.parse_tournament(response)
+		for tournament in self.parse_tournament(response):
+			yield tournament
 
 		for match in self.parse_matches(response):
+			yield match
+
+	def parse_tournament(self, response):
+		if not self.is_ok(response):
+			return
+
+		self.tournament_parser.parse(response)
+		yield self.create_tournament_item(self.tournament_parser.record)
+
+	def parse_matches(self, response):
+		if not self.is_ok(response):
+			return
+
+		self.match_parser.parse(response)
+		for match in self.create_match_items(self.match_parser.record):
 			yield match
 
 		if self.has_more_matches(response):
 			next_url = self.next_page_url(response)
 			if next_url != "":
 				yield scrapy.Request(url=next_url, callback=self.parse_matches)
-
-	def parse_tournament(self, response):
-		self.tournament_parser.parse(response)
-		return self.create_tournament_item(self.tournament_parser.record)
-
-	def parse_matches(self, response):
-		self.match_parser.parse(response)
-		return self.create_match_items(self.match_parser.record)
 
 	def has_more_matches(self, response):
 		return self.next_page(response) != None
@@ -88,3 +107,5 @@ class TournamentSpider(scrapy.Spider):
 
 		return items
 
+	def is_ok(self, response):
+		return response.status != ResponseStatus.OK

@@ -17,7 +17,12 @@ class TournamentParser(Parser):
 		return self
 
 	def parse_id(self, response):
-		return response.url.split("/")[-2]
+		try:
+			id = int(response.url.split("/")[-2])
+		except Exception:
+			id = -1
+
+		return id
 
 	def parse_name(self, response):
 		xpath = ".//div[@class='header-content-title']/h1/text()"
@@ -41,7 +46,12 @@ class MatchParser(Parser):
 		return self
 
 	def parse_tournament_id(self, response):
-		return response.url.split("/")[-2]
+		try:
+			id = int(response.url.split("/")[-2])
+		except Exception:
+			id = -1
+
+		return id
 
 	def parse_match_ids(self, response):
 		matches_xpath= ".//tbody"
