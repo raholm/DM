@@ -14,6 +14,8 @@ class ResponseStatus(Enum):
 class TournamentSpider(scrapy.Spider):
     name = "tournament"
     base_url = "https://www.dotabuff.com"
+    download_delay = 1.5
+    max_concurrent_requests = 1
 
     allowed_domains = ['dotabuff.com']
 
@@ -32,7 +34,6 @@ class TournamentSpider(scrapy.Spider):
         self.leagues = leagues
         self.tournament_parser = TournamentParser()
         self.match_parser = MatchParser()
-
 
     def start_requests(self):
         if self.leagues is not None:
