@@ -26,20 +26,19 @@ class TournamentSpider(scrapy.Spider):
         }
     }
 
-    def __init__(self, **kwargs):
+    def __init__(self, leagues=None, **kwargs):
         super().__init__(**kwargs)
 
+        self.leagues = leagues
         self.tournament_parser = TournamentParser()
         self.match_parser = MatchParser()
 
-    def start_requests(self):
-        num_of_leagues = 5
-        leagues = range(0, num_of_leagues)
-        leagues = [4664]
 
-        for league in leagues:
-            url = self.base_url + "/esports/leagues/" + str(league) + "/matches"
-            yield scrapy.Request(url=url, callback=self.parse)
+    def start_requests(self):
+        if self.leagues is not None:
+            for league in self.leagues:
+                url = self.base_url + "/esports/leagues/" + str(league) + "/matches"
+                yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
         if not self.is_ok(response):

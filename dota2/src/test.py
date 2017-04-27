@@ -20,5 +20,6 @@ with Dota2DBClient() as client:
     # for doc in client.find_tournament({}, {"name": 1}):
     #     pprint.pprint(doc)
     #
-    # for doc in client.find_tournament({"name": "The International 2016"}, {"name": 1}):
+    # for doc in client.find_tournament({"name": "The International 2016"}, {"id": 1}):
     #     pprint.pprint(doc)
+    pass

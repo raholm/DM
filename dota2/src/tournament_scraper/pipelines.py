@@ -36,6 +36,7 @@ class CountItemPipeline(object):
 class ItemValidatorPipeline(object):
     def process_item(self, item, spider):
         if not item.is_valid():
+            spider.logger.error("Invalid item found: %s" % (item,))
             raise DropItem(item)
 
         return item
@@ -57,7 +58,7 @@ class MongoDBPipeline(object):
         with Dota2DBClient() as client:
             for _, value in self.items.items():
                 if not client.insert_tournament(value):
-                    spider.logger.error("Duplicate key error: %s" % (value,))
+                    spider.logger.error("Duplicate key error in tournament collection: %s" % (value,))
 
     def add_match(self, item):
         self.items[item["tournament_id"]]["matches"].append(item["id"])
