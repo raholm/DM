@@ -11,8 +11,8 @@
 
 BOT_NAME = 'tournament_scraper'
 
-SPIDER_MODULES = ['tournament_scraper.spiders']
-NEWSPIDER_MODULE = 'tournament_scraper.spiders'
+SPIDER_MODULES = ['src.tournament_scraper.spiders']
+NEWSPIDER_MODULE = 'src.tournament_scraper.spiders'
 
 LOG_LEVEL = "WARNING"
 
