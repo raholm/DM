@@ -14,7 +14,7 @@ class ResponseStatus(Enum):
 class TournamentSpider(scrapy.Spider):
     name = "tournament"
     base_url = "https://www.dotabuff.com"
-    download_delay = 1.5
+    download_delay = 2
     max_concurrent_requests = 1
 
     allowed_domains = ['dotabuff.com']
