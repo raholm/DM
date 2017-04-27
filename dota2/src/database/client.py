@@ -21,6 +21,10 @@ class Dota2DBClient(object):
 
         return status
 
+    def find_tournament(self, filter, projection=None):
+        return self.tournament_collection.find(filter=filter,
+                                               projection=projection)
+
     def insert_match(self, doc_or_docs):
         status = True
 
@@ -30,6 +34,10 @@ class Dota2DBClient(object):
             status = False
 
         return status
+
+    def find_match(self, filter, projection=None):
+        return self.match_collection.find(filter=filter,
+                                          projection=projection)
 
     def __enter__(self):
         return self

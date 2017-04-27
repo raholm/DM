@@ -1,3 +1,5 @@
+import pprint
+
 from src.common.env import get_env_value
 from src.database.client import Dota2DBClient
 
@@ -7,9 +9,16 @@ print(get_env_value("D2_DB_COLLECTION_TOURNAMENT"))
 print(get_env_value("D2_DB_COLLECTION_MATCH"))
 
 with Dota2DBClient() as client:
-    pass
-
-# self.client = MongoClient(get_env_value("D2_DB_URI"))
-# self.db = self.client[get_env_value("D2_DB_NAME")]
-# self.tournament_collection = self.db[get_env_value("D2_DB_COLLECTION_TOURNAMENT")]
-# self.match_collection = self.db[get_env_value("D2_DB_COLLECTION_MATCH")]
+    # for doc in client.tournament_collection.find({}, {"name": 1}):
+    #     pprint.pprint(doc)
+    #
+    # for doc in client.tournament_collection.find({"name": "The International 2016"}):
+    #     pprint.pprint(doc)
+    # for doc in client.find_tournament({"name": "The International 2016"}):
+    #     pprint.pprint(doc)
+    #
+    # for doc in client.find_tournament({}, {"name": 1}):
+    #     pprint.pprint(doc)
+    #
+    # for doc in client.find_tournament({"name": "The International 2016"}, {"name": 1}):
+    #     pprint.pprint(doc)
