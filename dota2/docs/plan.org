@@ -1,0 +1,83 @@
+* Project
+DEADLINE: <2017-06-15 Thu>
+** Knowledge Acquisition
+*** ROCK algorithm
+DEADLINE: <2017-05-14 Sun>
+- Find resources
+- Find implementation
+*** FP-Growth algorithm
+DEADLINE: <2017-05-14 Sun>
+- Find resources
+- Find implementation
+*** Other clustering algorithms for categorical data
+DEADLINE: <2017-05-21 Sun>
+- Find resources
+- Find implementation(s)
+*** Other association analysis algorithms
+DEADLINE: <2017-05-21 Sun>
+- Find resources
+- Find implementation(s)
+** Data
+DEADLINE: <2017-05-14 Sun>
+- Insert Item data
+- Insert Hero data
+- Insert Ability data
+** Analysis
+*** Cluster
+**** Team compositions as a whole (there are 5 different roles in the game referred to positions 1-5)
+DEADLINE: <2017-05-21 Sun>
+- Query all team compositions
+- Cluster analysis
+**** The metagame, i.e. what heroes are good/popular in the state of the game during certain time periods
+DEADLINE: <2017-05-28 Sun>
+- Find Patch dates
+- Query all team compositions based on those dates
+- Cluster analysis
+**** During larger tournaments the metagame changes as the days go by since teams learn what works good/bad
+DEADLINE: <2017-05-28 Sun>
+- Decide on tournament
+- Query all team compositions based on day
+- Cluster analysis
+*** Association
+**** If enemy pick hero A, what should my team pick to counteract that hero (hero counters)
+DEADLINE: <2017-05-21 Sun>
+- Query all team compositions
+- Association analysis
+**** If my team pick hero A, what should my team pick that makes that hero even stronger (hero synergy)
+DEADLINE: <2017-05-21 Sun>
+- Query all team compositions
+- Association analysis
+**** The metagame, i.e. what heroes are good/popular in the state of the game during certain time periods
+DEADLINE: <2017-05-28 Sun>
+- Find Patch dates
+- Query all team compositions based on those dates
+- Association analysis
+**** During larger tournaments the metagame changes as the days go by since teams learn what works good/bad
+DEADLINE: <2017-05-28 Sun>
+- Decide on tournament
+- Query all team compositions based on day
+- Association analysis
+** Report
+*** Introduction
+DEADLINE: <2017-06-08 Thu>
+*** Background
+DEADLINE: <2017-06-08 Thu>
+- Dota 2 DEADLINE: <2017-05-21 Sun>
+*** Theory
+DEADLINE: <2017-06-08 Thu>
+- ROCK DEADLINE: <2017-05-21 Sun>
+- FP-Growth DEADLINE: <2017-05-21 Sun>
+- Other clustering algorithms DEADLINE: <2017-05-28 Sun>
+- Other association analysis algorithms DEADLINE: <2017-05-28 Sun>
+*** Method
+DEADLINE: <2017-06-08 Thu>
+*** Result
+DEADLINE: <2017-06-08 Thu>
+- Cluster Analysis
+- Association Analysis
+*** Discussion
+DEADLINE: <2017-06-08 Thu>
+- Cluster Analysis
+- Association Analysis
+*** Conclusion
+DEADLINE: <2017-06-08 Thu>
