@@ -2,7 +2,7 @@ import pprint
 
 from src.common.env import get_env_value
 from src.database.client import Dota2DBClient
-from src.database.queries import get_tournament_ids, get_tournament_match_ids
+from src.database.queries import get_tournament_ids, get_tournament_match_ids, get_match_ids
 
 print(get_env_value("D2_DB_URI"))
 print(get_env_value("D2_DB_NAME"))
@@ -27,3 +27,4 @@ with Dota2DBClient() as client:
 
 print(len(get_tournament_ids()))
 print(len(get_tournament_match_ids()))
+print(len(get_match_ids()))

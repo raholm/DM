@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from pymongo.errors import DuplicateKeyError
+from pymongo.errors import PyMongoError
 
 from src.common.env import get_env_value
 
@@ -17,7 +17,8 @@ class Dota2DBClient(object):
         try:
             self.__tournament_collection.insert(doc_or_docs=doc_or_docs,
                                                 *args, **kwargs)
-        except DuplicateKeyError:
+        except (PyMongoError, OverflowError) as e:
+            print(e)
             status = False
 
         return status
@@ -33,7 +34,8 @@ class Dota2DBClient(object):
         try:
             self.__match_collection.insert(doc_or_docs=doc_or_docs,
                                            *args, **kwargs)
-        except DuplicateKeyError:
+        except (PyMongoError, OverflowError) as e:
+            print(e)
             status = False
 
         return status

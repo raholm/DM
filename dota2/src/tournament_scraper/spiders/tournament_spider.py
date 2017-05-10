@@ -14,12 +14,13 @@ class ResponseStatus(Enum):
 class TournamentSpider(scrapy.Spider):
     name = "tournament"
     base_url = "https://www.dotabuff.com"
-    download_delay = 2
-    max_concurrent_requests = 1
+    # download_delay = 3
+    # max_concurrent_requests = 1
 
     allowed_domains = ['dotabuff.com']
 
     custom_settings = {
+        'ROBOTSTXT_OBEY': True,
         'ITEM_PIPELINES': {
             # 'tournament_scraper.pipelines.PrintItemPipeline': 100,
             'src.tournament_scraper.pipelines.ItemValidatorPipeline': 100,
