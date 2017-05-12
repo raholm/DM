@@ -24,3 +24,5 @@ def get_match_ids():
                for match in client.find_match({}, {"match_id": 1})]
 
     return ids
+
+
