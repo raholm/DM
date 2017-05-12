@@ -11,9 +11,8 @@ class TournamentParser(Parser):
         self.base_xpath = "//div[@class='container-inner']"
 
     def parse(self, response):
-        self.record = {}
-        self.record["id"] = self.parse_id(response)
-        self.record["name"] = self.parse_name(response)
+        self.record = {"id": self.parse_id(response),
+                       "name": self.parse_name(response)}
         return self
 
     def parse_id(self, response):
@@ -40,9 +39,8 @@ class MatchParser(Parser):
         self.base_xpath = "//div[@class='content-inner']"
 
     def parse(self, response):
-        self.record = {}
-        self.record["match_ids"] = self.parse_match_ids(response)
-        self.record["tournament_id"] = self.parse_tournament_id(response)
+        self.record = {"match_ids": self.parse_match_ids(response),
+                       "tournament_id": self.parse_tournament_id(response)}
         return self
 
     def parse_tournament_id(self, response):
