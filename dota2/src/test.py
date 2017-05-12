@@ -1,7 +1,5 @@
 import pprint
 
-import dota2api
-
 from src.common.env import get_env_value
 from src.database.client import Dota2DBClient
 from src.database.queries import get_tournament_ids, get_tournament_match_ids, get_match_ids
@@ -27,26 +25,6 @@ with Dota2DBClient() as client:
     #     pprint.pprint(doc)
     pass
 
-# print(len(get_tournament_ids()))
-# print(len(get_tournament_match_ids()))
-# print(len(get_match_ids()))
-
-api = dota2api.Initialise()
-
-
-# import json
-#
-# document = api.get_league_listing()
-#
-# for items in document.items():
-#     for item in items:
-#         for i in item:
-#             print(i)
-#             # doc = json.load(i)
-#             # print(api.get_match_history(league_id=doc["leagueid"]))
-#             break
-#
-# heroes = api.get_heroes()
-#
-# for hero in heroes["heroes"]:
-#     print(hero)
+print(len(get_tournament_ids()))
+print(len(get_tournament_match_ids()))
+print(len(get_match_ids()))
