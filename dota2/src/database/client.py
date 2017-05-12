@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 
-from src.common.env import get_env_value
+from src.util.env import get_env_value
 
 
 class Dota2DBClient(object):
