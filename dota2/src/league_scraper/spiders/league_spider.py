@@ -3,7 +3,7 @@ from enum import Enum
 import scrapy
 
 from ..parser import LeagueParser, MatchParser
-from ..items import TournamentScraperItem, MatchScraperItem
+from ..items import LeagueScraperItem, MatchScraperItem
 
 
 class ResponseStatus(Enum):
@@ -11,8 +11,8 @@ class ResponseStatus(Enum):
     ERROR = 404
 
 
-class TournamentSpider(scrapy.Spider):
-    name = "tournament"
+class LeagueSpider(scrapy.Spider):
+    name = "league"
     base_url = "https://www.dotabuff.com"
     # download_delay = 3
     # max_concurrent_requests = 1
@@ -22,10 +22,11 @@ class TournamentSpider(scrapy.Spider):
     custom_settings = {
         'ROBOTSTXT_OBEY': True,
         'ITEM_PIPELINES': {
-            # 'tournament_scraper.pipelines.PrintItemPipeline': 100,
-            'src.tournament_scraper.pipelines.ItemValidatorPipeline': 100,
-            'src.tournament_scraper.pipelines.CountItemPipeline': 200,
-            'src.tournament_scraper.pipelines.MongoDBPipeline': 800,
+            # 'league_scraper.pipelines.PrintItemPipeline': 100,
+            'src.league_scraper.pipelines.ItemValidatorPipeline': 100,
+            'src.league_scraper.pipelines.CountItemPipeline': 200,
+            # 'src.league_scraper.pipelines.MongoDBPipeline': 800,
+            'src.league_scraper.pipelines.AddMatchCountForLeaguesPipeline': 1000,
         }
     }
 
@@ -33,7 +34,7 @@ class TournamentSpider(scrapy.Spider):
         super().__init__(**kwargs)
 
         self.leagues = leagues
-        self.tournament_parser = LeagueParser()
+        self.league_parser = LeagueParser()
         self.match_parser = MatchParser()
 
     def start_requests(self):
@@ -46,18 +47,18 @@ class TournamentSpider(scrapy.Spider):
         if not self.is_ok(response):
             return
 
-        for tournament in self.parse_tournament(response):
-            yield tournament
+        for league in self.parse_league(response):
+            yield league
 
-        for match in self.parse_matches(response):
-            yield match
+            # for match in self.parse_matches(response):
+            #     yield match
 
-    def parse_tournament(self, response):
+    def parse_league(self, response):
         if not self.is_ok(response):
             return
 
-        self.tournament_parser.parse(response)
-        yield self.create_tournament_item(self.tournament_parser.record)
+        self.league_parser.parse(response)
+        yield self.create_league_item(self.league_parser.record)
 
     def parse_matches(self, response):
         if not self.is_ok(response):
@@ -92,10 +93,11 @@ class TournamentSpider(scrapy.Spider):
 
         return url
 
-    def create_tournament_item(self, record):
-        item = TournamentScraperItem()
+    def create_league_item(self, record):
+        item = LeagueScraperItem()
         item["id"] = record["id"]
         item["name"] = record["name"]
+        item["match_count"] = record["match_count"]
         return item
 
     def create_match_items(self, record):
@@ -104,7 +106,7 @@ class TournamentSpider(scrapy.Spider):
         for match_id in record["match_ids"]:
             item = MatchScraperItem()
             item["id"] = match_id
-            item["tournament_id"] = record["tournament_id"]
+            item["league_id"] = record["league_id"]
             items.append(item)
 
         return items

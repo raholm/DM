@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for tournament_scraper project
+# Scrapy settings for league_scraper project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,15 +9,15 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'tournament_scraper'
+BOT_NAME = 'league_scraper'
 
-SPIDER_MODULES = ['src.tournament_scraper.spiders']
-NEWSPIDER_MODULE = 'src.tournament_scraper.spiders'
+SPIDER_MODULES = ['src.league_scraper.spiders']
+NEWSPIDER_MODULE = 'src.league_scraper.spiders'
 
 LOG_LEVEL = "WARNING"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'tournament_scraper (+http://www.yourdomain.com)'
+# USER_AGENT = 'league_scraper (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -48,13 +48,13 @@ TELNETCONSOLE_ENABLED = False
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'tournament_scraper.middlewares.TournamentScraperSpiderMiddleware': 543,
+#    'league_scraper.middlewares.TournamentScraperSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    'tournament_scraper.middlewares.MyCustomDownloaderMiddleware': 543,
+#    'league_scraper.middlewares.MyCustomDownloaderMiddleware': 543,
 # }
 
 # Enable or disable extensions
@@ -66,8 +66,8 @@ TELNETCONSOLE_ENABLED = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
-#	'tournament_scraper.pipelines.PrintItemPipeline': 100,
-#	'tournament_scraper.pipelines.TournamentScraperPipeline': 300,
+#	'league_scraper.pipelines.PrintItemPipeline': 100,
+#	'league_scraper.pipelines.TournamentScraperPipeline': 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

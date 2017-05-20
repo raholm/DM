@@ -8,15 +8,16 @@ class Parser(object):
 
 class LeagueParser(Parser):
     def __init__(self):
-        self.base_xpath = "//div[@class='container-inner']"
+        super().__init__()
+        self.base_xpath = "//div[contains(@class, 'container-inner')]"
 
     def parse(self, response):
         self.record = {"id": self.parse_id(response),
-                       "name": self.parse_name(response)}
+                       "name": self.parse_name(response),
+                       "match_count": self.parse_match_count(response)}
         return self
 
-    @staticmethod
-    def parse_id(response):
+    def parse_id(self, response):
         try:
             league_id = int(response.url.split("/")[-2])
         except Exception:
@@ -28,24 +29,35 @@ class LeagueParser(Parser):
         xpath = ".//div[@class='header-content-title']/h1/text()"
 
         try:
-            name = response.xpath(self.base_xpath).xpath(xpath).extract()[0]
-        except IndexError:
-            name = ""
+            league_name = response.xpath(self.base_xpath).xpath(xpath).extract()[0]
+        except Exception:
+            league_name = ""
 
-        return name
+        return league_name
+
+    def parse_match_count(self, response):
+        xpath = ".//div[@class='viewport']/text()"
+
+        try:
+            match_count = response.xpath(self.base_xpath).xpath(xpath).extract()[0]
+            match_count = int(match_count.strip().split()[-1])
+        except Exception:
+            match_count = 0
+
+        return match_count
 
 
 class MatchParser(Parser):
     def __init__(self):
+        super().__init__()
         self.base_xpath = "//div[@class='content-inner']"
 
     def parse(self, response):
         self.record = {"match_ids": self.parse_match_ids(response),
-                       "tournament_id": self.parse_league_id(response)}
+                       "league_id": self.parse_league_id(response)}
         return self
 
-    @staticmethod
-    def parse_league_id(response):
+    def parse_league_id(self, response):
         try:
             match_id = int(response.url.split("/")[-2])
         except Exception:
@@ -66,8 +78,7 @@ class MatchParser(Parser):
 
         return match_ids
 
-    @staticmethod
-    def parse_match_id(response):
+    def parse_match_id(self, response):
         xpath = "text()"
 
         try:
