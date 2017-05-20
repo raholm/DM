@@ -14,7 +14,7 @@ def main():
             del hero["url_small_portrait"]
             del hero["url_large_portrait"]
             del hero["url_vertical_portrait"]
-            client.insert(hero, "hero")
+            client.insert("hero", hero)
 
 
 if __name__ == '__main__':

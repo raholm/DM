@@ -11,7 +11,7 @@ def main():
 
         for item in items["items"]:
             del item["url_image"]
-            client.insert(item, "item")
+            client.insert("item", item)
 
 
 if __name__ == '__main__':
