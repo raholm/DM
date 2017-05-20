@@ -6,7 +6,7 @@ class Parser(object):
         raise NotImplementedError("Parser.parse")
 
 
-class TournamentParser(Parser):
+class LeagueParser(Parser):
     def __init__(self):
         self.base_xpath = "//div[@class='container-inner']"
 
@@ -15,13 +15,14 @@ class TournamentParser(Parser):
                        "name": self.parse_name(response)}
         return self
 
-    def parse_id(self, response):
+    @staticmethod
+    def parse_id(response):
         try:
-            id = int(response.url.split("/")[-2])
+            league_id = int(response.url.split("/")[-2])
         except Exception:
-            id = -1
+            league_id = -1
 
-        return id
+        return league_id
 
     def parse_name(self, response):
         xpath = ".//div[@class='header-content-title']/h1/text()"
@@ -40,16 +41,17 @@ class MatchParser(Parser):
 
     def parse(self, response):
         self.record = {"match_ids": self.parse_match_ids(response),
-                       "tournament_id": self.parse_tournament_id(response)}
+                       "tournament_id": self.parse_league_id(response)}
         return self
 
-    def parse_tournament_id(self, response):
+    @staticmethod
+    def parse_league_id(response):
         try:
-            id = int(response.url.split("/")[-2])
+            match_id = int(response.url.split("/")[-2])
         except Exception:
-            id = -1
+            match_id = -1
 
-        return id
+        return match_id
 
     def parse_match_ids(self, response):
         matches_xpath = ".//tbody"
@@ -64,7 +66,8 @@ class MatchParser(Parser):
 
         return match_ids
 
-    def parse_match_id(self, response):
+    @staticmethod
+    def parse_match_id(response):
         xpath = "text()"
 
         try:

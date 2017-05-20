@@ -2,20 +2,23 @@ from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
 from twisted.internet import reactor
 
-from src.database.queries import get_tournament_ids
+from src.database.client import Dota2DBClient
+from src.database.queries import get_existing_league_ids
 from src.tournament_scraper.spiders.tournament_spider import TournamentSpider
 
 
 def main():
-    fetched_tournament_ids = set(get_tournament_ids())
+    with Dota2DBClient() as client:
+        existing_league_ids = set(get_existing_league_ids(client))
+
     start_idx = 0
-    num_of_tournaments = 5000
+    num_of_leagues = 5000
 
-    tournaments_to_fetch = [i for i in range(start_idx, start_idx + num_of_tournaments)
-                            if i not in fetched_tournament_ids]
+    leagues_to_fetch = [i for i in range(start_idx, start_idx + num_of_leagues)
+                        if i not in existing_league_ids]
 
-    print(tournaments_to_fetch)
-    run_spider(**{"leagues": tournaments_to_fetch})
+    print(leagues_to_fetch)
+    run_spider(**{"leagues": leagues_to_fetch})
 
 
 def run_spider(**kwargs):

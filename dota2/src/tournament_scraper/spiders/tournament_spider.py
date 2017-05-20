@@ -2,7 +2,7 @@ from enum import Enum
 
 import scrapy
 
-from ..parser import TournamentParser, MatchParser
+from ..parser import LeagueParser, MatchParser
 from ..items import TournamentScraperItem, MatchScraperItem
 
 
@@ -33,7 +33,7 @@ class TournamentSpider(scrapy.Spider):
         super().__init__(**kwargs)
 
         self.leagues = leagues
-        self.tournament_parser = TournamentParser()
+        self.tournament_parser = LeagueParser()
         self.match_parser = MatchParser()
 
     def start_requests(self):

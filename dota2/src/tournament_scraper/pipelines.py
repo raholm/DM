@@ -57,8 +57,8 @@ class MongoDBPipeline(object):
     def close_spider(self, spider):
         with Dota2DBClient() as client:
             for _, value in self.items.items():
-                if not client.insert_tournament(value):
-                    spider.logger.error("Duplicate key error in tournament collection: %s" % (value,))
+                if not client.insert("league", value):
+                    spider.logger.error("Duplicate key error in league collection: %s" % (value,))
 
     def add_match(self, item):
         self.items[item["tournament_id"]]["matches"].append(item["id"])
