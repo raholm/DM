@@ -28,6 +28,27 @@ class Dota2DBClient(object):
 
         return status
 
+    def update(self, collection, filter, update, *args, **kwargs):
+        self.__check_collection(collection)
+
+        status = True
+
+        try:
+            collection = self.__db[collection]
+            collection.update_many(filter=filter, update=update,
+                                   *args, **kwargs)
+        except PyMongoError as e:
+            print(e)
+            status = False
+
+        return status
+
+    def aggregate(self, collection, pipeline, *args, **kwargs):
+        self.__check_collection(collection)
+
+        collection = self.__db[collection]
+        return collection.aggregate(pipeline=pipeline, *args, **kwargs)
+
     def find(self, collection, filter, projection=None, *args, **kwargs):
         self.__check_collection(collection)
 

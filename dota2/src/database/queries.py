@@ -14,7 +14,7 @@ def get_existing_match_ids(client):
             for match in client.find("match", {}, {"match_id": 1})]
 
 
-def get_picks_bans_from(client, match_id_or_ids):
+def get_match_picks_bans_df(client, match_id_or_ids):
     if not isinstance(match_id_or_ids, (tuple, list)):
         match_id_or_ids = [match_id_or_ids]
 
@@ -71,3 +71,29 @@ def get_existing_league_ids(client):
     with client.find("league", {}, {"id": 1}) as leagues:
         return [league["id"]
                 for league in leagues]
+
+
+def get_leagues_to_scrape(client):
+    with client.find("league",
+                     {"$where": "this.matches.length != this.match_count"},
+                     {"id": 1}) as leagues:
+        return [league["id"] for league in leagues]
+
+
+def get_num_matches_in_leagues(client):
+    with client.aggregate("league",
+                          {"$project": {"id": "$id", "match_count": {"$size": "$matches"}}}) as leagues:
+        return {league["id"]: league["match_count"]
+                for league in leagues}
+
+
+def get_league_matches_dict(client):
+    with client.find("league", {}, {"id": 1, "matches": 1}) as leagues:
+        return {league["id"]: league["matches"]
+                for league in leagues}
+
+
+def get_total_num_league_matches(client):
+    with client.aggregate("league", {"$group": {"_id": {}, "count": {"$sum": {"$size": "$matches"}}}}) as counts:
+        for count in counts:
+            return count["count"]
