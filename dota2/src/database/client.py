@@ -5,13 +5,15 @@ from src.util.env import get_env_value
 
 
 class Dota2DBClient(object):
-    valid_collections = ["tournament", "match", "hero", "item"]
+    valid_collections = ["league", "match", "hero", "item"]
+    uri = get_env_value("D2_DB_URI")
+    db_name = get_env_value("D2_DB_NAME")
 
     def __init__(self):
-        self.__client = MongoClient(get_env_value("D2_DB_URI"))
-        self.__db = self.__client[get_env_value("D2_DB_NAME")]
+        self.__client = MongoClient(self.uri)
+        self.__db = self.__client[self.db_name]
 
-    def insert(self, doc_or_docs, collection, *args, **kwargs):
+    def insert(self, collection, doc_or_docs, *args, **kwargs):
         self.__check_collection(collection)
 
         status = True
@@ -26,24 +28,12 @@ class Dota2DBClient(object):
 
         return status
 
-    def insert_tournament(self, doc_or_docs, *args, **kwargs):
-        return self.insert(doc_or_docs, "tournament", *args, **kwargs)
-
-    def insert_match(self, doc_or_docs, *args, **kwargs):
-        return self.insert(doc_or_docs, "match", *args, **kwargs)
-
     def find(self, collection, filter, projection=None, *args, **kwargs):
         self.__check_collection(collection)
 
         collection = self.__db[collection]
         return collection.find(filter=filter, projection=projection,
                                *args, **kwargs)
-
-    def find_tournament(self, filter, projection=None, *args, **kwargs):
-        return self.find("tournament", filter, projection, *args, **kwargs)
-
-    def find_match(self, filter, projection=None, *args, **kwargs):
-        return self.find("match", filter, projection, *args, **kwargs)
 
     def __enter__(self):
         return self
