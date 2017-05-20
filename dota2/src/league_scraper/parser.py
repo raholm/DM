@@ -42,7 +42,7 @@ class LeagueParser(Parser):
             match_count = response.xpath(self.base_xpath).xpath(xpath).extract()[0]
             match_count = int(match_count.strip().split()[-1])
         except Exception:
-            match_count = 0
+            match_count = -1
 
         return match_count
 

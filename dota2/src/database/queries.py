@@ -75,7 +75,7 @@ def get_existing_league_ids(client):
 
 def get_leagues_to_scrape(client):
     with client.find("league",
-                     {"$where": "this.matches.length != this.match_count"},
+                     {"$where": "this.match_count > 0 && this.matches.length != this.match_count"},
                      {"id": 1}) as leagues:
         return [league["id"] for league in leagues]
 

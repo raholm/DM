@@ -23,7 +23,7 @@ class LeagueScraperItem(scrapy.Item):
         return self["name"] != ""
 
     def _is_valid_match_count(self):
-        return self["match_count"] > 0
+        return self["match_count"] >= 0
 
 
 class MatchScraperItem(scrapy.Item):
