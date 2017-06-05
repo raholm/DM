@@ -25,7 +25,12 @@ def get_match_picks_bans_df(client, match_id_or_ids):
                      projection={"picks_bans": 1}) \
             as matches:
         for match in matches:
-            new_df = pd.DataFrame(match["picks_bans"])
+            try:
+                picks_bans = match["picks_bans"]
+            except KeyError:
+                continue
+
+            new_df = pd.DataFrame(picks_bans)
             df = df.append(new_df, ignore_index=True)
 
     return df
@@ -97,3 +102,11 @@ def get_total_num_league_matches(client):
     with client.aggregate("league", {"$group": {"_id": {}, "count": {"$sum": {"$size": "$matches"}}}}) as counts:
         for count in counts:
             return count["count"]
+
+
+def get_heroes_dict(client):
+    with client.find("hero", {}, {"id": 1, "localized_name": 1}) as heroes:
+        heroes_dict = {hero["id"]: hero["localized_name"]
+                       for hero in heroes}
+
+    return heroes_dict

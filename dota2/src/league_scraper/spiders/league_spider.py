@@ -25,8 +25,8 @@ class LeagueSpider(scrapy.Spider):
             # 'league_scraper.pipelines.PrintItemPipeline': 100,
             'src.league_scraper.pipelines.ItemValidatorPipeline': 100,
             'src.league_scraper.pipelines.CountItemPipeline': 200,
-            # 'src.league_scraper.pipelines.MongoDBPipeline': 800,
-            'src.league_scraper.pipelines.AddMatchCountForLeaguesPipeline': 1000,
+            'src.league_scraper.pipelines.MongoDBPipeline': 800,
+            # 'src.league_scraper.pipelines.AddMatchCountForLeaguesPipeline': 900,
         }
     }
 
@@ -50,8 +50,8 @@ class LeagueSpider(scrapy.Spider):
         for league in self.parse_league(response):
             yield league
 
-            # for match in self.parse_matches(response):
-            #     yield match
+        for match in self.parse_matches(response):
+            yield match
 
     def parse_league(self, response):
         if not self.is_ok(response):

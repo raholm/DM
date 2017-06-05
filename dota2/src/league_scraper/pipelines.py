@@ -109,9 +109,9 @@ class AddMatchCountForLeaguesPipeline(object):
     def close_spider(self, spider):
         with Dota2DBClient() as client:
             for league in self.leagues.values():
-                print(league)
-                # if not client.update("league", {"id": league["id"]}, {"$set": {"match_count": league["match_count"]}}):
-                #     spider.logger.error("Failed to update: %s" % (league,))
+                if not client.update("league",
+                                     {"id": league["id"]}, {"$set": {"match_count": league["match_count"]}}):
+                    spider.logger.error("Failed to update: %s" % (league,))
 
     def add_league(self, item):
         self.leagues[item["id"]] = dict(item)
