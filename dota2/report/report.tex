@@ -1,13 +1,21 @@
 \documentclass[10pt, a4paper]{article}
 
+\usepackage{subfiles}
+
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
-\usepackage{subfiles}
 \usepackage{graphicx}
+\usepackage{float}
 
 \begin{document}
 \subfile{titlepage}
 \subfile{introduction}
+\subfile{method}
+\subfile{result}
+\subfile{discussion}
+\subfile{conclusion}
+\bibliographystyle{plain}
+\bibliography{references}
 \end{document}
