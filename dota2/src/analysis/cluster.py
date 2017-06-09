@@ -3,8 +3,9 @@ from collections import defaultdict
 
 import pandas as pd
 
-from src.analysis.data import get_team_compositions_by_name, get_picks_bans_international2015, \
-    get_team_compositions_by_id, get_team_compositions_against, get_picks_bans_major_events, get_team_compositions_with
+from src.analysis.data import get_team_compositions_by_name, \
+    get_team_composition_from, get_team_compositions_against, get_drafts_from_major_events, get_team_compositions_with, \
+    get_drafts_from_manila_major
 from src.database.heroes import Heroes
 from src.resources.ROCK.data_point import DataPoint
 from src.resources.ROCK.rock_algorithm import RockAlgorithm
@@ -68,22 +69,54 @@ def summarize_rock_clusters(clusters, min_freq, **kwargs):
             if val >= min_freq:
                 clusters_dict[cluster_id][key] = val
 
+        for key in list(clusters_dict.keys()):
+            if not clusters_dict[key]:
+                del clusters_dict[key]
+
     print(json.dumps(clusters_dict, indent=4, sort_keys=True))
 
 
-def cl_international2015():
+def cl_manila_major():
+    heroes = Heroes()
+
+    drafts = get_drafts_from_manila_major()
+    team_comps = get_team_composition_from(drafts, by_team=False)
+
+    print(team_comps.shape)
+
+    min_clusters = 15
+    threshold = 0.5
+    min_freq = 5
+    clusters = get_rock_clusters(team_comps, min_clusters, threshold)
+    # print_rock_clusters(clusters, heroes=heroes)
+    summarize_rock_clusters(clusters, min_freq, heroes=heroes)
+
+
+def cl_shanghai_major():
     pass
 
 
 def cl_major_events():
-    pass
+    heroes = Heroes()
+
+    drafts = get_drafts_from_major_events()
+    team_comps = get_team_composition_from(drafts, by_team=False)
+
+    print(team_comps.shape)
+
+    min_clusters = 25
+    threshold = 0.5
+    min_freq = 10
+    clusters = get_rock_clusters(team_comps, min_clusters, threshold)
+    # print_rock_clusters(clusters, heroes=heroes)
+    summarize_rock_clusters(clusters, min_freq, heroes=heroes)
 
 
 def cl_all_against_antimage():
     heroes = Heroes()
 
-    picks_bans = get_picks_bans_major_events()
-    team_comps = get_team_compositions_by_id(picks_bans)
+    drafts = get_drafts_from_major_events()
+    team_comps = get_team_composition_from(drafts)
 
     hero_id = heroes.inverse["Anti-Mage"]
     team_comps_against = get_team_compositions_against(team_comps, hero_id)
@@ -101,24 +134,27 @@ def cl_all_against_antimage():
 def cl_all_with_wisp():
     heroes = Heroes()
 
-    picks_bans = get_picks_bans_major_events()
-    team_comps = get_team_compositions_by_id(picks_bans)
+    drafts = get_drafts_from_major_events()
+    team_comps = get_team_composition_from(drafts)
 
     hero_id = heroes.inverse["Io"]
-    team_comps_against = get_team_compositions_with(team_comps, hero_id)
+    team_comps_with = get_team_compositions_with(team_comps, hero_id)
     print(heroes.heroes[hero_id])
+    print(team_comps_with.shape)
 
-    min_clusters = 2
-    threshold = 0.3
-    min_freq = 4
-    clusters = get_rock_clusters(team_comps_against, min_clusters, threshold)
+    min_clusters = 25
+    threshold = 0.4
+    min_freq = 10
+    clusters = get_rock_clusters(team_comps_with, min_clusters, threshold)
     # print_rock_clusters(clusters, heroes=heroes)
     summarize_rock_clusters(clusters, min_freq, heroes=heroes)
 
 
 def main():
-    # Sort rows before clustering
-    cl_all_against_antimage()
+    # cl_major_events()
+    cl_manila_major()
+    # cl_all_against_antimage()
+    # cl_all_with_wisp()
 
 
 if __name__ == '__main__':

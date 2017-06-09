@@ -3,13 +3,13 @@ import pandas as pd
 from collections import defaultdict
 
 from src.database.client import Dota2DBClient
-from src.database.queries import get_match_ids_in_league, get_match_picks_bans_df
+from src.database.queries import get_match_ids_in_league, get_draft_from_df
 
 
-def get_team_compositions_by_id(picks_bans):
-    def create_team_compositions(picks_bans):
+def get_team_composition_from(draft, by_team=True):
+    def create_team_compositions(draft):
         team_size = 5
-        number_of_rows = int(picks_bans.shape[0] / 5)
+        number_of_rows = int(draft.shape[0] / 5)
         team_compositions = pd.DataFrame(index=np.arange(0, number_of_rows),
                                          columns=[1, 2, 3, 4, 5])
 
@@ -17,19 +17,23 @@ def get_team_compositions_by_id(picks_bans):
             start_idx = i * team_size
             end_idx = start_idx + team_size
 
-            team_picks = picks_bans.iloc[start_idx:end_idx].hero_id
+            team_picks = draft.iloc[start_idx:end_idx].hero_id
             team_composition = team_picks.values
             team_compositions.loc[i] = team_composition
 
         return team_compositions
 
-    picks = picks_bans[picks_bans.is_pick]
+    picks = draft[draft.is_pick]
 
     team0_picks = picks[picks.team == 0]
     team1_picks = picks[picks.team == 1]
 
-    return {"team0": create_team_compositions(team0_picks),
-            "team1": create_team_compositions(team1_picks)}
+    if by_team:
+        return {"team0": create_team_compositions(team0_picks),
+                "team1": create_team_compositions(team1_picks)}
+    else:
+        return pd.concat([create_team_compositions(team0_picks),
+                          create_team_compositions(team1_picks)])
 
 
 def get_team_compositions_by_name(team_compositions_ids, **kwargs):
@@ -89,16 +93,24 @@ def get_hero_pick_statistics(team_comps, hero_id_or_ids, heroes):
     return statistics
 
 
-def get_picks_bans_international2015():
+def get_drafts_from_shanghai_major():
+    return get_drafts_from("The Shanghai Major 2016")
+
+
+def get_drafts_from_manila_major():
+    return get_drafts_from("The Manila Major 2016")
+
+
+def get_drafts_from(league):
     with Dota2DBClient() as client:
         match_ids = [match_id for match_id in
-                     get_match_ids_in_league(client, "The International 2015")]
-        picks_bans = get_match_picks_bans_df(client, match_ids)
+                     get_match_ids_in_league(client, league)]
+        draft = get_draft_from_df(client, match_ids)
 
-    return picks_bans
+    return draft
 
 
-def get_picks_bans_major_events():
+def get_drafts_from_major_events():
     major_events = ["The Frankfurt Major 2015",
                     "The Shanghai Major 2016",
                     "The Manila Major 2016",
@@ -116,6 +128,6 @@ def get_picks_bans_major_events():
         for league in major_events:
             match_ids += get_match_ids_in_league(client, league)
 
-        picks_bans = get_match_picks_bans_df(client, match_ids)
+        draft = get_draft_from_df(client, match_ids)
 
-    return picks_bans
+    return draft
