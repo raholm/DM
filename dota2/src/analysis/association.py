@@ -2,8 +2,8 @@ import json
 
 import pandas as pd
 
-from src.analysis.data import get_picks_bans_international2015, get_team_compositions_by_id, \
-    get_team_compositions_against, get_picks_bans_major_events, get_team_compositions_with, get_hero_pick_statistics
+from src.analysis.data import get_draft_international2015, get_team_composition_from, \
+    get_team_compositions_against, get_drafts_from_major_events, get_team_compositions_with, get_hero_pick_statistics
 from src.database.heroes import Heroes
 from src.resources.fpgrowth.pyfpgrowth import find_frequent_patterns, generate_association_rules
 
@@ -39,8 +39,8 @@ def ass_international2015():
 def ass_major_events():
     heroes = Heroes()
 
-    picks_bans = get_picks_bans_major_events()
-    team_comps = get_team_compositions_by_id(picks_bans)
+    picks_bans = get_drafts_from_major_events()
+    team_comps = get_team_composition_from(picks_bans)
     team_comps = pd.concat([team_comps["team0"], team_comps["team1"]])
 
     min_supports = [10, 25, 50, 100]
@@ -55,8 +55,8 @@ def ass_major_events():
 def ass_all_against_antimage():
     heroes = Heroes()
 
-    picks_bans = get_picks_bans_major_events()
-    team_comps = get_team_compositions_by_id(picks_bans)
+    picks_bans = get_drafts_from_major_events()
+    team_comps = get_team_composition_from(picks_bans)
 
     hero_id = heroes.inverse["Anti-Mage"]
     team_comps_against = get_team_compositions_against(team_comps, hero_id)
@@ -82,8 +82,8 @@ def ass_all_against_antimage():
 def ass_all_with_wisp():
     heroes = Heroes()
 
-    picks_bans = get_picks_bans_major_events()
-    team_comps = get_team_compositions_by_id(picks_bans)
+    picks_bans = get_drafts_from_major_events()
+    team_comps = get_team_composition_from(picks_bans)
 
     hero_id = heroes.inverse["Io"]
     team_comps_against = get_team_compositions_with(team_comps, hero_id)

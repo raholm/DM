@@ -14,7 +14,7 @@ def get_existing_match_ids(client):
             for match in client.find("match", {}, {"match_id": 1})]
 
 
-def get_match_picks_bans_df(client, match_id_or_ids):
+def get_draft_from_df(client, match_id_or_ids):
     if not isinstance(match_id_or_ids, (tuple, list)):
         match_id_or_ids = [match_id_or_ids]
 
