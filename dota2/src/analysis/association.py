@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 
-from src.analysis.data import get_draft_international2015, get_team_composition_from, \
+from src.analysis.data import get_team_composition_from, \
     get_team_compositions_against, get_drafts_from_major_events, get_team_compositions_with, get_hero_pick_statistics
 from src.database.heroes import Heroes
 from src.resources.fpgrowth.pyfpgrowth import find_frequent_patterns, generate_association_rules

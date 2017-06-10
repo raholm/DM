@@ -2,37 +2,52 @@ import json
 from collections import defaultdict
 
 import pandas as pd
+from pyclustering.cluster.rock import rock
 
 from src.analysis.data import get_team_compositions_by_name, \
     get_team_composition_from, get_team_compositions_against, get_drafts_from_major_events, get_team_compositions_with, \
-    get_drafts_from_manila_major
+    get_drafts_from_manila_major, get_drafts_from_shanghai_major
 from src.database.heroes import Heroes
 from src.resources.ROCK.data_point import DataPoint
 from src.resources.ROCK.rock_algorithm import RockAlgorithm
 
 
-def get_rock_clusters(data, min_clusters, threshold):
+def get_rock_clusters(data, min_clusters, threshold, pyclustering=True):
     if isinstance(data, pd.DataFrame):
-        data = data.values.tolist()
+        cl_data = data.values.tolist()
 
-    data = [sorted(d) for d in data]
+    cl_data = [sorted(d) for d in cl_data]
 
-    points = [DataPoint(i, d)
-              for i, d in enumerate(data)]
+    if pyclustering:
+        rock_instance = rock(cl_data, 0.4, min_clusters, threshold)
+        rock_instance.process()
+        clusters = rock_instance.get_clusters()
+        return create_clusters_pyclustering_dict(clusters, data)
+    else:
+        points = [DataPoint(i, d)
+                  for i, d in enumerate(data)]
 
-    rock_instance = RockAlgorithm(points, min_clusters, threshold)
-    rock_clusters = rock_instance.cluster()
+        rock_instance = RockAlgorithm(points, min_clusters, threshold)
+        rock_clusters = rock_instance.cluster()
+        #
+        # goodness = [float(measure)
+        #             for measure in rock_clusters.level_labels[1:]][::-1]
+        # if len(goodness) == 0:
+        #     return None
+        #
+        # best_level = len(rock_clusters.level_labels) - np.argmax(goodness) - 1
 
-    # goodness = [float(measure)
-    #             for measure in rock_clusters.level_labels[1:]][::-1]
-    # if len(goodness) == 0:
-    #     return None
-    #
-    # best_level = len(rock_clusters.level_labels) - np.argmax(goodness) - 1
+        cluster_set = rock_clusters.entry_map[rock_clusters.next_level - 1]
+        return create_clusters_dict(cluster_set)
 
-    cluster_set = rock_clusters.entry_map[rock_clusters.next_level - 1]
-    clusters = create_clusters_dict(cluster_set)
-    return clusters
+
+def create_clusters_pyclustering_dict(clusters, data):
+    cluster_dict = {}
+
+    for cluster_id, cluster in enumerate(clusters):
+        cluster_dict[cluster_id] = data.iloc[cluster]
+
+    return cluster_dict
 
 
 def create_clusters_dict(clusters):
@@ -77,23 +92,31 @@ def summarize_rock_clusters(clusters, min_freq, **kwargs):
 
 
 def cl_manila_major():
-    heroes = Heroes()
-
     drafts = get_drafts_from_manila_major()
     team_comps = get_team_composition_from(drafts, by_team=False)
 
     print(team_comps.shape)
 
-    min_clusters = 15
-    threshold = 0.5
-    min_freq = 5
-    clusters = get_rock_clusters(team_comps, min_clusters, threshold)
-    # print_rock_clusters(clusters, heroes=heroes)
-    summarize_rock_clusters(clusters, min_freq, heroes=heroes)
+    cluster_team_comps(team_comps)
 
 
 def cl_shanghai_major():
-    pass
+    drafts = get_drafts_from_shanghai_major()
+    team_comps = get_team_composition_from(drafts, by_team=False)
+
+    print(team_comps.shape)
+    cluster_team_comps(team_comps)
+
+
+def cluster_team_comps(team_comps):
+    heroes = Heroes()
+
+    min_clusters = 150
+    threshold = 0.6
+    min_freq = 10
+    clusters = get_rock_clusters(team_comps, min_clusters, threshold)
+    # print_rock_clusters(clusters, heroes=heroes)
+    summarize_rock_clusters(clusters, min_freq, heroes=heroes)
 
 
 def cl_major_events():
@@ -152,7 +175,10 @@ def cl_all_with_wisp():
 
 def main():
     # cl_major_events()
+    print("Manila Major")
     cl_manila_major()
+    print("Shanghai Major")
+    cl_shanghai_major()
     # cl_all_against_antimage()
     # cl_all_with_wisp()
 
