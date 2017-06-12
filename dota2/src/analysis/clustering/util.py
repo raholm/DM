@@ -75,7 +75,7 @@ def summarize_clusters_by_hero_score(clusters, min_samples, min_size=0, **kwargs
         return ordered_cluster
 
     cluster_summary = {}
-    sample_portion = 0.05
+    sample_portion = 0.01
 
     for cluster_id, cluster in clusters.items():
         cluster_size = cluster.shape[0]
