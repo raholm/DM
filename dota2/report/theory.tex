@@ -1,0 +1,43 @@
+\documentclass[result.tex]{subfiles}
+
+\begin{document}
+
+\section*{\centering Theory}
+
+In this report, I will be using the ROCK clustering algorithm \cite{guha2000rock} for finding clusters and FP-Growth algorithm \cite{han2000mining} for finding association rules. Furthermore, I will be using \textit{k}-modes clustering algorithm as well which is described below.
+
+\subsubsection*{\textit{k}-modes}
+
+$k$-means is one of the oldest and most well known clustering algorithms today. However, it is not well suited for categorical variables that is being used in this report, but \textit{k}-modes by Zhexue Huang \cite{huang1998extensions} is an exension to \textit{k}-means for just that purpose.
+
+The $k$-modes algorithm uses the simple matching dissimilarity measure for categorical objects and is formally
+
+\begin{align*}
+d_1(x_i, x_j) = \sum_{k=1}^{m}  \mathbbm{1} \{ x_{i,k} \neq x_{j,k} \},
+\end{align*}
+where $\mathbbm{1} \{ \cdot \}$ is the indicator function and $x_i$, $x_j$ are vectors of $m$ categorical values.
+
+Let $X = \left[ x_1, x_2, \ldots, x_n \right]$ be a set of categorical objects describe by categorical attributes $A_1, A_2, \ldots, A_m$. A mode of dataset $X$ is a vector $q = \left[ q_1, q_2, \ldots, q_m \right]$ that minimizes
+
+\begin{align*}
+d(X, q) = \sum_{i=1}^{n} d_1(x_i, q).
+\end{align*}
+
+Let $n_{c_{k, j}}$ be the number of objects having the \textit{k}th category $c_{k,j}$ in attribute $A_j$ and $f_r(A_j = c_k,j | X) = \frac{n_{c_{k,j}}}{n}$ is the relative frequency of category $c_{k,j}$ in $X$. The function $d(X, q)$ is minimized by selecting the mode according to $f_r(A_j = q_j | X) >= f_r(A_j = c_{k,j} | X)$ for $q_j \neq c_{k,j}$ for all $j = 1, \ldots, m$.
+
+The cost function becomes
+
+\begin{align*}
+P(W, Q) = \sum_{l=1}^{k} \sum_{i=1}^{n} \sum_{j=1}^{m} w_{l,i} \mathbbm{1} \{ x_{i,j} \neq q_{l, j} \},
+\end{align*}
+where $q_{l} = \left[ q_{l,1}, q_{l,2}, \ldots, q_{l,m} \right]$ and $w_{l,i} \in \{ 0, 1 \}$, $\sum_{l=1}^{k} w_{l,i} = 1$, and $0 < \sum_{i=1}^{n} w_{l,i} < n$. This can be minimized iteratively similar to how $k$-means does it, but instead using the simple matching dissimilarity measure, working with cluster modes, and updating those modes according to the above criteria. Since this algorithm converges to a local optima the initial set of modes are important, therefore I decided to use the initialization method by Cao et al. \cite{cao2009new} based on density to do that automatically.
+
+The ordering of the categorical attributes in the dissimilarity measure above matters because it do not make any assumptions about their domains. In the analysis done in this report the domain is the same for all variables so the ordering should not matter in this particular case. So I will also use an alternative dissimilarity measurement defined below.
+
+Let $x_i$ and $x_j$ be two vectors of length $m$, then the dissimilarity measure is defined as
+
+\begin{align*}
+d_2(x_i, x_j) &= n - \sum_{k=1}^{m} \sum_{l=1}^{m} \mathbbm{1} \{ x_{i, k} == x_{j, l} \}.
+\end{align*}
+
+\end{document}
