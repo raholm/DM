@@ -180,11 +180,11 @@ def cl_shanghai_major_with_rock():
 def cluster_team_comps_with_rock(team_comps):
     heroes = Heroes()
 
-    min_clusters = 150
-    threshold = 0.6
+    min_clusters = 100
+    threshold = 0.8
     min_freq = 10
     n_samples = 2
-    min_size = 20
+    min_size = 10
     clusters = get_rock_clusters(team_comps, min_clusters, threshold)
     # print_rock_clusters(clusters, heroes=heroes)
     # summarize_clusters_by_frequency(clusters, min_freq, heroes=heroes)
@@ -246,9 +246,11 @@ def cluster_summary_to_latex_table(cluster_summary):
     """
 
     content = ""
+    total_points = 0
 
     for cluster_id, cluster in cluster_summary.items():
         cluster_size = cluster[0]["size"]
+        total_points += cluster_size
         num_of_obs = len(cluster[1])
 
         table_entry = "\\multirow{%i}{*}{%i}\n" % (num_of_obs, cluster_size)
@@ -265,9 +267,21 @@ def cluster_summary_to_latex_table(cluster_summary):
 
     table = prefix + content[:-1] + postfix
     print(table)
+    print(total_points)
 
 
 def get_kmodes_clusters(data, n_clusters, **kwargs):
+    def dissimilarity(a, b):
+        dissimilarities = []
+
+        for element in a:
+            mismatch_count = 0
+            if element not in b:
+                mismatch_count += 1
+            dissimilarities.append(mismatch_count)
+
+        return dissimilarities
+
     if isinstance(data, pd.DataFrame):
         cl_data = data.values.tolist()
     else:
@@ -275,7 +289,7 @@ def get_kmodes_clusters(data, n_clusters, **kwargs):
 
     cl_data = np.array([sorted(d) for d in cl_data])
 
-    kmodes_instance = KModes(n_clusters=n_clusters, **kwargs)
+    kmodes_instance = KModes(n_clusters=n_clusters, cat_dissim=dissimilarity, **kwargs)
     cluster_labels = kmodes_instance.fit_predict(cl_data)
 
     clusters = {label: [] for label in range(0, n_clusters)}
@@ -293,10 +307,11 @@ def main():
     # cl_major_events()
     print("Manila Major")
     # cl_manila_major_with_rock()
-    # cl_manila_major_with_kmodes()
+    cl_manila_major_with_kmodes()
     print("Shanghai Major")
     # cl_shanghai_major_with_rock()
-    # cl_shanghai_major_with_kmodes()
+    cl_shanghai_major_with_kmodes()
+
 
 if __name__ == '__main__':
     main()
