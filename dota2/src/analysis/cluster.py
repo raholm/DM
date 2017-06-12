@@ -9,7 +9,7 @@ from pyclustering.cluster.rock import rock
 
 from src.analysis.data import get_team_compositions_by_name, \
     get_team_composition_from, \
-    get_drafts_from_manila_major, get_drafts_from_shanghai_major, get_drafts_from_international2015
+    get_drafts_from_manila_major, get_drafts_from_shanghai_major
 from src.database.heroes import Heroes
 from src.resources.ROCK.data_point import DataPoint
 from src.resources.ROCK.rock_algorithm import RockAlgorithm
@@ -18,8 +18,8 @@ from src.resources.ROCK.rock_algorithm import RockAlgorithm
 def get_rock_clusters(data, min_clusters, threshold, pyclustering=True):
     if isinstance(data, pd.DataFrame):
         cl_data = data.values.tolist()
-
-    cl_data = [sorted(d) for d in cl_data]
+    else:
+        cl_data = data
 
     if pyclustering:
         # rock_instance = rock(cl_data, 0.4, min_clusters, threshold, False)
@@ -180,8 +180,8 @@ def cl_shanghai_major_with_rock():
 def cluster_team_comps_with_rock(team_comps):
     heroes = Heroes()
 
-    min_clusters = 100
-    threshold = 0.8
+    min_clusters = 150
+    threshold = 0.6
     min_freq = 10
     n_samples = 2
     min_size = 10
@@ -287,9 +287,8 @@ def get_kmodes_clusters(data, n_clusters, **kwargs):
     else:
         cl_data = data
 
-    cl_data = np.array([sorted(d) for d in cl_data])
-
-    kmodes_instance = KModes(n_clusters=n_clusters, cat_dissim=dissimilarity, **kwargs)
+    # kmodes_instance = KModes(n_clusters=n_clusters, cat_dissim=dissimilarity, **kwargs)
+    kmodes_instance = KModes(n_clusters=n_clusters, **kwargs)
     cluster_labels = kmodes_instance.fit_predict(cl_data)
 
     clusters = {label: [] for label in range(0, n_clusters)}
@@ -306,11 +305,11 @@ def main():
     # print("All Major Events")
     # cl_major_events()
     print("Manila Major")
-    # cl_manila_major_with_rock()
-    cl_manila_major_with_kmodes()
+    cl_manila_major_with_rock()
+    # cl_manila_major_with_kmodes()
     print("Shanghai Major")
-    # cl_shanghai_major_with_rock()
-    cl_shanghai_major_with_kmodes()
+    cl_shanghai_major_with_rock()
+    # cl_shanghai_major_with_kmodes()
 
 
 if __name__ == '__main__':
