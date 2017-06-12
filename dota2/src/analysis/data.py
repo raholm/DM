@@ -41,30 +41,35 @@ def get_team_compositions_by_name(team_compositions_ids, **kwargs):
     return team_compositions_ids.applymap(lambda x: heroes[x])
 
 
-def get_team_compositions_against(team_comps, hero_id):
+def get_team_compositions_against(team_comps, hero_id, positions=None):
     team0_comps = team_comps["team0"]
     team1_comps = team_comps["team1"]
 
-    team0_idx = _get_indexes_with_hero(team0_comps, hero_id)
-    team1_idx = _get_indexes_with_hero(team1_comps, hero_id)
+    team0_idx = _get_indexes_with_hero(team0_comps, hero_id, positions)
+    team1_idx = _get_indexes_with_hero(team1_comps, hero_id, positions)
 
     return pd.concat([team0_comps.iloc[team1_idx], team1_comps.iloc[team0_idx]])
 
 
-def get_team_compositions_with(team_comps, hero_id):
+def get_team_compositions_with(team_comps, hero_id, positions=None):
     team0_comps = team_comps["team0"]
     team1_comps = team_comps["team1"]
 
-    team0_idx = _get_indexes_with_hero(team0_comps, hero_id)
-    team1_idx = _get_indexes_with_hero(team1_comps, hero_id)
+    team0_idx = _get_indexes_with_hero(team0_comps, hero_id, positions)
+    team1_idx = _get_indexes_with_hero(team1_comps, hero_id, positions)
 
     return pd.concat([team0_comps.iloc[team0_idx], team1_comps.iloc[team1_idx]])
 
 
-def _get_indexes_with_hero(team_comps, hero_id):
+def _get_indexes_with_hero(team_comps, hero_id, positions):
+    if positions is None:
+        positions = [1, 2, 3, 4, 5]
+
     return [idx
-            for idx, values in team_comps.iterrows()
-            if hero_id in values.values]
+            for idx, heroes in team_comps.iterrows()
+            for pos, hero in enumerate(heroes.values)
+            if (pos + 1) in positions and hero_id == hero
+            ]
 
 
 def get_hero_pick_statistics(team_comps, hero_id_or_ids, heroes):
@@ -99,6 +104,14 @@ def get_drafts_from_shanghai_major():
 
 def get_drafts_from_manila_major():
     return get_drafts_from("The Manila Major 2016")
+
+
+def get_drafts_from_international2016():
+    return get_drafts_from("The International 2016")
+
+
+def get_drafts_from_international2015():
+    return get_drafts_from("The International 2015")
 
 
 def get_drafts_from(league):
