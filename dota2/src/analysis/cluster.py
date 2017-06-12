@@ -106,7 +106,7 @@ def summarize_clusters_by_sampling(clusters, n_samples, **kwargs):
     print(json.dumps(clusters_dict, indent=4, sort_keys=True))
 
 
-def summarize_clusters_by_hero_score(clusters, n_samples, min_size=0, **kwargs):
+def summarize_clusters_by_hero_score(clusters, min_samples, min_size=0, **kwargs):
     def get_hero_scores(cluster):
         hero_scores = defaultdict(int)
 
@@ -131,9 +131,11 @@ def summarize_clusters_by_hero_score(clusters, n_samples, min_size=0, **kwargs):
         return ordered_cluster
 
     cluster_summary = {}
+    sample_portion = 0.05
 
     for cluster_id, cluster in clusters.items():
         cluster_size = cluster.shape[0]
+        num_of_samples = np.max([min_samples, int(cluster_size * sample_portion)])
 
         if cluster_size < min_size:
             continue
@@ -141,7 +143,7 @@ def summarize_clusters_by_hero_score(clusters, n_samples, min_size=0, **kwargs):
         hero_scores = get_hero_scores(cluster)
         sorted_cluster = sort_cluster_obs_by_hero_scores(cluster, hero_scores)
 
-        cluster = sorted_cluster.iloc[:n_samples]
+        cluster = sorted_cluster.iloc[:num_of_samples]
         readable_cluster = get_team_compositions_by_name(cluster, **kwargs)
 
         cluster_output = []
@@ -154,7 +156,7 @@ def summarize_clusters_by_hero_score(clusters, n_samples, min_size=0, **kwargs):
 
         cluster_summary[cluster_id] = [{"size": cluster_size}, cluster_output]
 
-    print(json.dumps(cluster_summary, indent=4, sort_keys=True))
+    # print(json.dumps(cluster_summary, indent=4, sort_keys=True))
     return cluster_summary
 
 
@@ -186,7 +188,8 @@ def cluster_team_comps_with_rock(team_comps):
     clusters = get_rock_clusters(team_comps, min_clusters, threshold)
     # print_rock_clusters(clusters, heroes=heroes)
     # summarize_clusters_by_frequency(clusters, min_freq, heroes=heroes)
-    summarize_clusters_by_hero_score(clusters, n_samples, min_size, heroes=heroes)
+    cluster_summary = summarize_clusters_by_hero_score(clusters, n_samples, min_size, heroes=heroes)
+    cluster_summary_to_latex_table(cluster_summary)
 
 
 def cl_manila_major_with_kmodes():
@@ -215,12 +218,13 @@ def cluster_team_comps_with_kmodes(team_comps):
     # summarize_clusters_by_frequency(clusters, min_freq, heroes=heroes)
     # summarize_clusters_by_sampling(clusters, n_samples, heroes=heroes)
     cluster_summary = summarize_clusters_by_hero_score(clusters, n_samples, heroes=heroes)
-
-    # for centroid_id, centroid in enumerate(centroids):
-    #     readable_centroid = [heroes.heroes[hero_id] for hero_id in centroid]
-    #     print("Centroid %i: %s" % (centroid_id, readable_centroid))
-
     cluster_summary_to_latex_table(cluster_summary)
+
+
+def print_kmodes_centroids(centroids, heroes):
+    for centroid_id, centroid in enumerate(centroids):
+        readable_centroid = [heroes.heroes[hero_id] for hero_id in centroid]
+        print("Centroid %i: %s" % (centroid_id, readable_centroid))
 
 
 def cluster_summary_to_latex_table(cluster_summary):
@@ -242,8 +246,6 @@ def cluster_summary_to_latex_table(cluster_summary):
     """
 
     content = ""
-
-    print(cluster_summary)
 
     for cluster_id, cluster in cluster_summary.items():
         cluster_size = cluster[0]["size"]
@@ -294,10 +296,7 @@ def main():
     # cl_manila_major_with_kmodes()
     print("Shanghai Major")
     # cl_shanghai_major_with_rock()
-    cl_shanghai_major_with_kmodes()
-    # cl_all_against_antimage()
-    # cl_all_with_wisp()
-
+    # cl_shanghai_major_with_kmodes()
 
 if __name__ == '__main__':
     main()
