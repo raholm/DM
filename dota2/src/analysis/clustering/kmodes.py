@@ -26,6 +26,7 @@ def get_kmodes_clusters(data, n_clusters, **kwargs):
         cl_data = data
 
     if kwargs.get("mydist", False):
+        del kwargs["mydist"]
         kmodes_instance = KModes(n_clusters=n_clusters, cat_dissim=dissimilarity, **kwargs)
     else:
         kmodes_instance = KModes(n_clusters=n_clusters, **kwargs)
@@ -82,7 +83,7 @@ def cl_major_events():
     team_comps = get_team_composition_from(drafts, by_team=False)
 
     print(team_comps.shape)
-    cluster_team_comps_with_kmodes(team_comps, n_clusters=50)
+    cluster_team_comps_with_kmodes(team_comps, n_clusters=25)
 
 
 def main():
