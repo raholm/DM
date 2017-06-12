@@ -4,4 +4,85 @@
 
 \section*{\centering Result}
 
+\subsection*{Association Analysis}
+
+\subsubsection*{When should I pick hero X?}
+
+To keep the scope realistic I decided to choose two particular heroes, Anti-Mage and Clinkz, to analyze when it should be picked according to patterns in professional matches.
+
+Anti-Mage is usually a niche pick that have specific strengths as his name suggests. A mobile hero that is extra strong against mages so he is usually picked at the end of the drafting phase. The matches analyzed are those where he is picked as a 4th or 5th pick, 153 out of 180 matches, in Valve events as it suggest that he was a counter pick to the opposing teams heroes. The analysis for Anti-Mage was done by select the opposing team composition of the 153 matches and run the FP-Growth algorithm on the matrix, 153x5, and table \ref{tab:ass_antimage} shows rules that were found.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | c | c | }
+    \hline
+    antecedent & consequent \\ \hline
+    Razor & Rubick \\ \hline
+    Ember Spirit & Dark Seer \\ \hline
+    Sand King & Rubick \\ \hline
+    Naga Siren & Dark Seer  \\
+    \hline
+  \end{tabular}
+  \caption{Association rules by FP-Growth algorithm of 153 team compositions against 4th or 5th pick Anti-Mage. The parameters were set to minimum support of 5 and minimum confidence of 0.4.}
+  \label{tab:ass_antimage}
+\end{table}
+
+Clinkz is also a niche pick that is very mobile because he can become invisible and has high single target damage. He his, as Anti-Mage, usually a 4th or 5th pick, 93 out of 102 matches, and so a similar analysis was made which can be seen in table \ref{tab:ass_clinkz}.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | c | c | }
+    \hline
+    antecedent & consequent \\ \hline
+    Dark Seer & Juggernaut \\ \hline
+    Gyrocopter & Earthshaker \\ \hline
+    Tiny & Io \\
+    \hline
+  \end{tabular}
+  \caption{Association rules by FP-Growth algorithm of 180 team compositions against 4th or 5th pick Clinkz. The parameters were set to minimum support of 5 and minimum confidence of 0.5.}
+  \label{tab:ass_clinkz}
+\end{table}
+
+\subsubsection*{Which hero should I pick along X?}
+
+Similar to above, I decided to choose two heroes, Io the Wisp and Magnus. Io is very good at adding mobility and durability to heroes. Io is most commonly picked early in the draft since it can be combined with many heroes depending on the opponent's picks. Magnus is good at buffing melee heroes and initiate engagements
+
+Here I used all the team compositions from 3028 matches, i.e. 6056 team compositions, in which Io occurs 451 times and magnus 165. The rules selected contained either Io or Magnus in either the antecedent or consequent. Table \ref{tab:ass_io} shows the rules found for Io by FP-Growth
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | c | c | }
+    \hline
+    antecedent & consequent \\ \hline
+    Earthshaker, Tiny & Io \\ \hline
+    Tiny, Beastmater & Io \\ \hline
+    Tiny, Rubick & Io \\ \hline
+    Earthshaker, Io & Tiny  \\ \hline
+    Tiny, Queen of Pain & Io \\ \hline
+    Tiny, Batrider & Io \\
+    \hline
+  \end{tabular}
+  \caption{Association rules containing Io by FP-Growth algorithm of 6028 team compositions. The parameters were set to minimum support of 10 and minimum confidence of 0.5.}
+  \label{tab:ass_io}
+\end{table}
+
+and table \ref{tab:ass_magnus} contains the rules that include Magnus.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | c | c | }
+    \hline
+    antecedent & consequent \\ \hline
+    Vengeful Spirit, Magnus & Juggernaut \\ \hline
+    Templar Assassin, Magnus & Juggernaut \\ \hline
+    Silencer, Magnus & Juggernaut \\ \hline
+    Witch Doctor, Magnus & Juggernaut  \\
+    \hline
+  \end{tabular}
+  \caption{Association rules containing Magnus by FP-Growth algorithm of 6028 team compositions. The parameters were set to minimum support of 5 and minimum confidence of 0.5.}
+  \label{tab:ass_magnus}
+\end{table}
+
+\subsection*{Cluster Analysis}
+
 \end{document}
