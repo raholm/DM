@@ -4,14 +4,34 @@
 
 \section*{\centering Method}
 
-As esports is a rather new phenomenon, there have not been much analyses around it in the literature. However, some research have been made in DOTA 2 such as a recommendation engine for picks based on machine learning by Conley and Perry \cite{conley2013does}. Summerville et al. \cite{cook2016draft} have used machine learning to predict picks in the draft phase. In this report it is more of interest to explore patterns in the draft using data mining techniques rather than machine learning which is lacking in the literature.
+As esports is a rather new phenomenon, there have not been much analyses around it in the literature. However, some research have been made in DOTA 2 such as a recommendation engine for picks based on machine learning by Conley and Perry \cite{conley2013does}. Summerville et al. \cite{cook2016draft} have used machine learning to predict picks in the draft phase. In this report, it is more of interest to explore patterns in the draft using data mining techniques rather than machine learning which is lacking in the literature.
 
 \subsection*{Dataset}
 
-DOTABUFF\footnote{https://www.dotabuff.com/} is a website that contain detailed information and statistics about both competitive and casual matches. The dataset used in this article consists of all the matches from all the Valve major championships until \today and all the Internationals from 2012 stored by DOTABUFF. That covers 3028 matches in total.
+DOTABUFF\footnote{https://www.dotabuff.com/} is a website that contains detailed information and statistics about both competitive and casual matches. The dataset used in this article consists of all the matches from all the Valve major championships\footnote{http://wiki.teamliquid.net/dota2/Dota\_Major\_Championships} until \today, and all the Internationals from 2012 stored by DOTABUFF. That covers 3028 matches in total.
+
+\subsection*{Experimentation}
+
+In order to investigate the questions given in the introduction, I will conduct four experiments using association and cluster analysis.
+
+\subsubsection*{Association Analysis}
+
+\textbf{When should I pick hero X?}: To keep a realistic scope I have chosen two particular heroes in mind, Anti-Mage and Clinkz, to analyze when they should be picked according to patterns in professional matches from Valve events. The reasons for those are that they are niche picks that have very specific strengths and weaknesses. Anti-Mage, as his name suggests, is a mobile hero that is extra strong against magical damage heroes. Clinkz, on the other hand, is very mobile due to the ability of becoming invisible and can deal huge amount of single target physical damage.
+
+What they have in common during the drafting phase is that they are usually picked as 4th or 5th pick, indicating that they are counter picks to the opposing teams heroes. In Valve events, Anti-Mage was picked 4th or 5th in 153 out of 180 matches and Clinkz 93 out of 102 matches. The analysis will thus look at combinations of heroes in the team compositions against 4th or 5th pick Clinkz or Anti-Mage.
+
+\textbf{What hero(es) should I pick along X?}: For similar reasons above, I decided to choose two heroes, Io the Wisp and Magnus. Io is very good at adding mobility and durability to heroes, and is most commonly picked early in the draft since it can be combined with many heroes depending on the opponent's picks. Magnus is good at buffing melee heroes and initiate engagements, thus being flexible enough to be picked in all stages of the draft.
+
+The complete dataset of 3028 matches, 6056 team compositions, is used in order to find answers to this question.
+
+\subsubsection*{Cluster Analysis}
+
+\textbf{Hero Combinations}: An important part of understanding DOTA 2 is to understand the heroes and how they might synergize. The first step in doing so is to find common hero combinations which is the purpose of this analysis. Due to performance issues with ROCK on larger datasets it had to be excluded from the analysis.
+
+\textbf{Evolution of the Metagame}: The metagame shapes how the game is being played and is important for games in esports. To investigate whether it is possible to detect differences between events in DOTA 2, I chose the Shanghai and Manila Majors that were played in 2016, approximately 3 months apart. The number of observations are 598 and 642 respectively.
 
 \subsection*{Evaluation}
 
-To evaluate the results from the analyses they have to be analyzed by either players, analysts, or enthusiasts that have a fairly good understanding of the game and the heroes in particular. I decided upon using qualitative analysis based on my own knowledge gained by watching a lot of professional games over the years and therefore heard professional game analysts' opinions about the game.
+To evaluate the results from the analyses they have to be analyzed by either players, analysts, or enthusiasts that have a fairly good understanding of the game and the heroes in particular. I decided upon using qualitative analysis based on my own knowledge gained from watching a lot of professional games over the years and therefore heard professional game analysts' opinions about the game.
 
 \end{document}
