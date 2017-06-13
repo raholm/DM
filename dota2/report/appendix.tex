@@ -4,9 +4,13 @@
 \clearpage
 \appendix
 
-\section*{Clustering of All Major Events Since 2012}
+\section*{Cluster Results}
 
-\subsection*{\textit{k}-modes}
+In all of the tables there will be numbers becide each hero name and those correspond to the frequency of the particluar hero in the cluster.
+
+\subsection*{Clustering of All Major Events Since 2012}
+
+\subsubsection*{\textit{k}-modes}
 
 \begin{table}[H]
   \centering
@@ -76,12 +80,11 @@
     & Tusk: 7, Earthshaker: 73, Luna: 21, Rubick: 18, Shadow Fiend: 48 \\
     \hline
   \end{tabular}
-  \caption{}
-  \label{}
+  \caption{All clusters found by \textit{k}-modes on all obervations from Valve events.}
+  \label{tab:cl_app_all_kmodes}
 \end{table}
 
-
-\subsection*{\textit{k}-modes with modified dissimilarity measure}
+\subsubsection*{\textit{k}-modes with modified dissimilarity measure}
 
 \begin{table}[H]
   \centering
@@ -151,8 +154,8 @@
     & Invoker: 43, Clinkz: 4, Earth Spirit: 6, Beastmaster: 40, Oracle: 15 \\
     \hline
   \end{tabular}
-  \caption{}
-  \label{}
+  \caption{All clusters found by \textit{k}-modes on all obervations from Valve events using modified dissimilarity measure.}
+  \label{tab:cl_app_all_kmodes_mod}
 \end{table}
 
 \clearpage
@@ -221,13 +224,13 @@
     & Mirana: 9, Earth Spirit: 3, Witch Doctor: 4, Slardar: 16, Enchantress: 7 \\
     \hline
   \end{tabular}
-  \caption{}
-  \label{}
+  \caption{All clusters found by \textit{k}-modes on all obervations from the Manila Major.}
+  \label{tab:cl_app_manila_kmodes}
 \end{table}
 
 \newpage
 
-\subsection*{\textit{k}-modes with modified dissimilarity measure}
+\subsubsection*{\textit{k}-modes with modified dissimilarity measure}
 
 \begin{table}[H]
   \centering
@@ -291,13 +294,13 @@
     & Bane: 2, Slardar: 1, Enigma: 3, Io: 4, Alchemist: 3 \\
     \hline
   \end{tabular}
-  \caption{}
-  \label{}
+   \caption{All clusters found by \textit{k}-modes on all obervations from the Manila Major using modified dissimilarity measure.}
+  \label{tab:cl_app_manila_kmodes_mod}
 \end{table}
 
 \newpage
 
-\subsection*{ROCK}
+\subsubsection*{ROCK}
 
 \begin{table}[H]
   \centering
@@ -371,15 +374,15 @@
     & Slardar: 5, Invoker: 8, Juggernaut: 19, Enchantress: 19, Lion: 20 \\
     \hline
   \end{tabular}
-  \caption{}
-  \label{}
+  \caption{All clusters with a size of atleast 10 found by ROCK with a threshold of 0.6 for cluster merging on observations from the Manila Major}
+  \label{tab:cl_manila_rock_all}
 \end{table}
 
 \newpage
 
-\section*{Clustering of Shanghai Major 2016}
+\subsection*{Clustering of Shanghai Major 2016}
 
-\subsection*{\textit{k}-modes}
+\subsubsection*{\textit{k}-modes}
 
 \begin{table}[H]
   \centering
@@ -388,7 +391,7 @@
     \multicolumn{2}{ | c | }{Clusters} \\
     \hline
     Size & Samples \\ \hline
-    \multirow{11}{*}{221}
+    \multirow{8}{*}{221}
     & Vengeful Spirit: 37, Witch Doctor: 57, Juggernaut: 12, Invoker: 40, Nature's Prophet: 30 \\
     & Witch Doctor: 57, Batrider: 20, Lone Druid: 26, Earth Spirit: 28, Death Prophet: 23 \\
     & Witch Doctor: 57, Faceless Void: 14, Ember Spirit: 14, Earth Spirit: 28, Invoker: 40 \\
@@ -397,9 +400,6 @@
     & Sven: 14, Io: 23, Witch Doctor: 57, Tiny: 17, Dark Seer: 31 \\
     & Vengeful Spirit: 37, Bristleback: 7, Witch Doctor: 57, Spectre: 10, Nature's Prophet: 30 \\
     & Spirit Breaker: 18, Doom: 7, Witch Doctor: 57, Outworld Devourer: 18, Invoker: 40 \\
-    & Dark Seer: 31, Witch Doctor: 57, Outworld Devourer: 18, Tiny: 17, Bounty Hunter: 15 \\
-    & Io: 23, Beastmaster: 23, Witch Doctor: 57, Tiny: 17, Queen of Pain: 17 \\
-    & Faceless Void: 14, Witch Doctor: 57, Oracle: 19, Invoker: 40, Viper: 6 \\
     \hline
     \multirow{3}{*}{76}
     & Juggernaut: 12, Slardar: 8, Bane: 19, Tusk: 34, Invoker: 24 \\
@@ -440,13 +440,13 @@
     & Doom: 2, Bane: 13, Juggernaut: 3, Invoker: 8, Chen: 5 \\
     \hline
   \end{tabular}
-  \caption{}
-  \label{}
+   \caption{All clusters found by \textit{k}-modes on all obervations from the Shanghai Major.}
+   \label{tab:cl_app_shanghai_kmodes}
 \end{table}
 
 \newpage
 
-\subsection*{\textit{k}-modes with modified dissimilarity measure}
+\subsubsection*{\textit{k}-modes with modified dissimilarity measure}
 
 \begin{table}[H]
   \centering
@@ -455,7 +455,7 @@
     \multicolumn{2}{ | c | }{Clusters} \\
     \hline
     Size & Samples \\ \hline
-    \multirow{10}{*}{205}
+    \multirow{8}{*}{205}
     & Vengeful Spirit: 42, Witch Doctor: 54, Nature's Prophet: 33, Invoker: 66, Juggernaut: 28 \\
     & Death Prophet: 22, Spirit Breaker: 17, Witch Doctor: 54, Invoker: 66, Bounty Hunter: 13 \\
     & Vengeful Spirit: 42, Slark: 12, Nature's Prophet: 33, Invoker: 66, Disruptor: 18 \\
@@ -464,8 +464,6 @@
     & Vengeful Spirit: 42, Pugna: 4, Nature's Prophet: 33, Invoker: 66, Dazzle: 19 \\
     & Spirit Breaker: 17, Dazzle: 19, Nature's Prophet: 33, Invoker: 66, Juggernaut: 28 \\
     & Oracle: 13, Faceless Void: 21, Witch Doctor: 54, Invoker: 66, Viper: 8 \\
-    & Beastmaster: 15, Vengeful Spirit: 42, Night Stalker: 17, Invoker: 66, Gyrocopter: 20 \\
-    & Spirit Breaker: 17, Witch Doctor: 54, Invoker: 66, Doom: 8, Outworld Devourer: 14 \\
     \hline
     \multirow{4}{*}{94}
     & Bane: 22, Juggernaut: 16, Slardar: 9, Tusk: 42, Invoker: 34 \\
@@ -508,13 +506,13 @@
     & Earthshaker: 2, Chen: 6, Outworld Devourer: 4, Tusk: 6, Queen of Pain: 3 \\
     \hline
   \end{tabular}
-  \caption{}
-  \label{}
+  \caption{All clusters found by \textit{k}-modes on all obervations from the Shanghai Major using modified dissimilarity measure.}
+  \label{tab:cl_app_shanghai_kmodes_mod}
 \end{table}
 
 \newpage
 
-\subsection*{ROCK}
+\subsubsection*{ROCK}
 
 \begin{table}[H]
   \centering
@@ -600,8 +598,8 @@
     & Vengeful Spirit: 10, Outworld Devourer: 10, Enchantress: 4, Ember Spirit: 3, Mirana: 5 \\
     \hline
   \end{tabular}
-  \caption{}
-  \label{}
+  \caption{All clusters with a size of atleast 10 found by ROCK with a threshold of 0.6 for cluster merging on observations from the Shanghai Major}
+  \label{tab:cl_shanghai_rock_all}
 \end{table}
 
 
