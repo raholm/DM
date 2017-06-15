@@ -4,7 +4,7 @@
 
 \section*{\centering Method}
 
-As esports is a rather new phenomenon, there have not been much analyses around it in the literature. However, some research have been made in DOTA 2 such as a recommendation engine for picks based on machine learning by Conley and Perry \cite{conley2013does}. Summerville et al. \cite{cook2016draft} have used machine learning to predict picks in the draft phase. In this report, it is more of interest to explore patterns in the draft using data mining techniques rather than machine learning which is lacking in the literature.
+As esports is a rather new phenomenon, there have not been much analyses around it in the literature. However, some research have been made in DOTA 2 such as a recommendation engine for picks based on machine learning by Conley and Perry \cite{conley2013does}. Summerville et al. \cite{cook2016draft} have used supervised learning to predict picks in the draft phase. In this report, it is more of interest to explore patterns in the draft using data mining rather than machine learning which is lacking in the literature. The techniques applied are of unsupervised nature; meaning there are no defined \enquote{right} answers.
 
 \subsection*{Dataset}
 
@@ -16,7 +16,7 @@ In order to investigate the questions given in the introduction, I conducted fou
 
 \subsubsection*{Association Analysis}
 
-\textbf{When should I pick hero X?}: To keep a realistic scope I chose two particular heroes in mind, Anti-Mage and Clinkz, to analyze when they should be picked according to patterns in professional matches from Valve events. The reasons for those are that they are niche picks that have very specific strengths and weaknesses. Anti-Mage, as his name suggests, is a mobile hero that is extra strong against magical damage heroes. Clinkz, on the other hand, is very mobile due to the ability of becoming invisible and can deal huge amount of single target physical damage.
+\textbf{When should I pick hero X?}: To keep a realistic scope I chose two particular heroes in mind, Anti-Mage and Clinkz, to analyze when they should be picked according to patterns in professional matches from Valve events. The reasons for those are that they are niche picks that have very specific strengths and weaknesses. Anti-Mage, as his name suggests, is a mobile hero that is extra strong against magical damage heroes. Clinkz, on the other hand, is very mobile due to the ability of becoming invisible and can deal huge amount of physical damage to a single target.
 
 What they have in common during the drafting phase is that they are usually picked as 4th or 5th pick, indicating that they are counter picks to the opposing teams heroes. In Valve events, Anti-Mage was picked 4th or 5th in 153 out of 180 matches and, Clinkz, 93 out of 102 matches. The analysis will thus look at combinations of heroes in the team compositions against 4th or 5th pick Clinkz or Anti-Mage.
 
