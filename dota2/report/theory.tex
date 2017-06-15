@@ -4,7 +4,7 @@
 
 \section*{\centering Theory}
 
-In this section I present the theory that is required to understand the this report.
+In this section I present the theory that is required to understand this report.
 
 \subsubsection*{\textit{k}-modes}
 
@@ -32,7 +32,7 @@ P(W, Q) = \sum_{l=1}^{k} \sum_{i=1}^{n} \sum_{j=1}^{m} w_{l,i} \mathbbm{1} \{ x_
 \end{align*}
 where $q_{l} = \left[ q_{l,1}, q_{l,2}, \ldots, q_{l,m} \right]$ and $w_{l,i} \in \{ 0, 1 \}$, $\sum_{l=1}^{k} w_{l,i} = 1$, and $0 < \sum_{i=1}^{n} w_{l,i} < n$. This can be minimized iteratively similar to how $k$-means does it, but instead using the simple matching dissimilarity measure, working with cluster modes, and updating those modes according to the above criteria. Since this algorithm converges to a local optima the initial set of modes are important, therefore I decided to use the initialization method by Cao et al. \cite{cao2009new} based on density to do that automatically.
 
-The ordering of the categorical attributes in the dissimilarity measure above matters because it do not make any assumptions about their domains. In the analysis done in this report the domain is the same for all variables so the ordering should not matter in this particular case. So I will also use an alternative dissimilarity measurement defined below.
+The ordering of the categorical attributes in the dissimilarity measure above matters because it do not make any assumptions about their domains. In the analyses done in this report the domain is the same for all variables so the ordering should not matter in this particular case. So I will also use an alternative dissimilarity measurement defined below.
 
 Let $x_i$ and $x_j$ be two vectors of length $m$, then the dissimilarity measure is defined as
 
